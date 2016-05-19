@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */; };
-		3A18F2141CEDA5D7003141B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2131CEDA5D7003141B9 /* ViewController.swift */; };
 		3A18F2171CEDA5D7003141B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2151CEDA5D7003141B9 /* Main.storyboard */; };
 		3A18F2191CEDA5D7003141B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2181CEDA5D7003141B9 /* Assets.xcassets */; };
 		3A18F21C1CEDA5D7003141B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */; };
 		3A18F2271CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2261CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4Tests.swift */; };
 		3A18F2321CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2311CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift */; };
+		3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,6 @@
 /* Begin PBXFileReference section */
 		3A18F20E1CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist iOS NanoDegree P4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3A18F2131CEDA5D7003141B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3A18F2161CEDA5D7003141B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3A18F2181CEDA5D7003141B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A18F21B1CEDA5D7003141B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		3A18F22D1CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual Tourist iOS NanoDegree P4UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A18F2311CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_Tourist_iOS_NanoDegree_P4UITests.swift; sourceTree = "<group>"; };
 		3A18F2331CEDA5D7003141B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationWIthPinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */,
-				3A18F2131CEDA5D7003141B9 /* ViewController.swift */,
+				3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */,
 				3A18F2151CEDA5D7003141B9 /* Main.storyboard */,
 				3A18F2181CEDA5D7003141B9 /* Assets.xcassets */,
 				3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */,
@@ -256,8 +256,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A18F2141CEDA5D7003141B9 /* ViewController.swift in Sources */,
 				3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */,
+				3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
