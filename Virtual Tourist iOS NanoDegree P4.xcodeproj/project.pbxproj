@@ -14,6 +14,13 @@
 		3A18F2271CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2261CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4Tests.swift */; };
 		3A18F2321CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2311CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift */; };
 		3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */; };
+		3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E801D13F3F600CA522B /* VT.xcdatamodeld */; };
+		3AF28E871D14003400CA522B /* VTStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E861D14003400CA522B /* VTStack.swift */; };
+		3AF28E8A1D14014F00CA522B /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E891D14014F00CA522B /* Pin.swift */; };
+		3AF28E8C1D14015C00CA522B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E8B1D14015C00CA522B /* Photo.swift */; };
+		3AF28E901D1403E700CA522B /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E8F1D1403E700CA522B /* ManagedObject.swift */; };
+		3AF28E931D140E6A00CA522B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E921D140E6A00CA522B /* Utilities.swift */; };
+		3AF28E961D1413AB00CA522B /* ManagedObjectContextSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E951D1413AB00CA522B /* ManagedObjectContextSettable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +54,13 @@
 		3A18F2311CEDA5D7003141B9 /* Virtual_Tourist_iOS_NanoDegree_P4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_Tourist_iOS_NanoDegree_P4UITests.swift; sourceTree = "<group>"; };
 		3A18F2331CEDA5D7003141B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationWIthPinViewController.swift; sourceTree = "<group>"; };
+		3AF28E811D13F3F600CA522B /* VT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VT.xcdatamodel; sourceTree = "<group>"; };
+		3AF28E861D14003400CA522B /* VTStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTStack.swift; sourceTree = "<group>"; };
+		3AF28E891D14014F00CA522B /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		3AF28E8B1D14015C00CA522B /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		3AF28E8F1D1403E700CA522B /* ManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
+		3AF28E921D140E6A00CA522B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		3AF28E951D1413AB00CA522B /* ManagedObjectContextSettable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextSettable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +111,8 @@
 		3A18F2101CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4 */ = {
 			isa = PBXGroup;
 			children = (
-				3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */,
-				3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */,
-				3A18F2151CEDA5D7003141B9 /* Main.storyboard */,
-				3A18F2181CEDA5D7003141B9 /* Assets.xcassets */,
-				3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */,
-				3A18F21D1CEDA5D7003141B9 /* Info.plist */,
+				3AF28E841D13FA9100CA522B /* VT */,
+				3AF28E831D13FA6300CA522B /* VTModel */,
 			);
 			path = "Virtual Tourist iOS NanoDegree P4";
 			sourceTree = "<group>";
@@ -123,6 +133,65 @@
 				3A18F2331CEDA5D7003141B9 /* Info.plist */,
 			);
 			path = "Virtual Tourist iOS NanoDegree P4UITests";
+			sourceTree = "<group>";
+		};
+		3AF28E831D13FA6300CA522B /* VTModel */ = {
+			isa = PBXGroup;
+			children = (
+				3AF28E801D13F3F600CA522B /* VT.xcdatamodeld */,
+				3AF28E861D14003400CA522B /* VTStack.swift */,
+				3AF28E881D1400B300CA522B /* Model */,
+				3AF28E911D140E2200CA522B /* CoreDataHelpers */,
+			);
+			name = VTModel;
+			sourceTree = "<group>";
+		};
+		3AF28E841D13FA9100CA522B /* VT */ = {
+			isa = PBXGroup;
+			children = (
+				3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */,
+				3A18F2151CEDA5D7003141B9 /* Main.storyboard */,
+				3A18F2181CEDA5D7003141B9 /* Assets.xcassets */,
+				3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */,
+				3A18F21D1CEDA5D7003141B9 /* Info.plist */,
+				3AF28E941D14139100CA522B /* Protocols */,
+				3AF28E851D13FA9B00CA522B /* Views */,
+			);
+			name = VT;
+			sourceTree = "<group>";
+		};
+		3AF28E851D13FA9B00CA522B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		3AF28E881D1400B300CA522B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3AF28E891D14014F00CA522B /* Pin.swift */,
+				3AF28E8B1D14015C00CA522B /* Photo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3AF28E911D140E2200CA522B /* CoreDataHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				3AF28E8F1D1403E700CA522B /* ManagedObject.swift */,
+				3AF28E921D140E6A00CA522B /* Utilities.swift */,
+			);
+			name = CoreDataHelpers;
+			sourceTree = "<group>";
+		};
+		3AF28E941D14139100CA522B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				3AF28E951D1413AB00CA522B /* ManagedObjectContextSettable.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,8 +325,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AF28E901D1403E700CA522B /* ManagedObject.swift in Sources */,
+				3AF28E8C1D14015C00CA522B /* Photo.swift in Sources */,
+				3AF28E8A1D14014F00CA522B /* Pin.swift in Sources */,
+				3AF28E871D14003400CA522B /* VTStack.swift in Sources */,
 				3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */,
 				3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */,
+				3AF28E931D140E6A00CA522B /* Utilities.swift in Sources */,
+				3AF28E961D1413AB00CA522B /* ManagedObjectContextSettable.swift in Sources */,
+				3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +560,7 @@
 				3A18F2381CEDA5D7003141B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A18F2391CEDA5D7003141B9 /* Build configuration list for PBXNativeTarget "Virtual Tourist iOS NanoDegree P4Tests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +569,7 @@
 				3A18F23B1CEDA5D7003141B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A18F23C1CEDA5D7003141B9 /* Build configuration list for PBXNativeTarget "Virtual Tourist iOS NanoDegree P4UITests" */ = {
 			isa = XCConfigurationList;
@@ -500,8 +578,22 @@
 				3A18F23E1CEDA5D7003141B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3AF28E801D13F3F600CA522B /* VT.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3AF28E811D13F3F600CA522B /* VT.xcdatamodel */,
+			);
+			currentVersion = 3AF28E811D13F3F600CA522B /* VT.xcdatamodel */;
+			path = VT.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3A18F2061CEDA5D7003141B9 /* Project object */;
 }

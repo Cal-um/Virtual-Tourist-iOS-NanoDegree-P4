@@ -10,13 +10,17 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+	
+	// Creates managedObjectContext for main thread. 
+	let managedObjectContext = createVTMainContext()
   var window: UIWindow?
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    // Override point for customization after application launch.
-    return true
+		
+		guard let vc = window?.rootViewController as? ManagedObjectContextSettable else { fatalError("Wrong view controller type") }
+		vc.managedObjectContext = managedObjectContext
+		return true
   }
 
   func applicationWillResignActive(application: UIApplication) {
