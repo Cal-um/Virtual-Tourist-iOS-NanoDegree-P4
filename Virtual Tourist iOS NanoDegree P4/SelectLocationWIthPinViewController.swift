@@ -14,8 +14,17 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	var managedObjectContext: NSManagedObjectContext!
 
-
   @IBOutlet weak var mapView: MKMapView!
 	
+	override func viewDidLoad() {
+		if let hasRegion = MKRegionInformation.checkIfThereAreSavedCoordinatesAndDecode() {
+			mapView.setRegion(hasRegion, animated: true)
+		}
+	}
+
+	override func viewWillDisappear(animated: Bool) {
+		let currentRegion = MKRegionInformation(region: mapView.region)
+		currentRegion.saveMapCoordinateRegionToUserDefualts()
+	}
 
 }

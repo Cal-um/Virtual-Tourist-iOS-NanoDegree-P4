@@ -41,5 +41,30 @@ struct MKRegionInformation {
 		return region
 	}
 	
+	func saveMapCoordinateRegionToUserDefualts() {
+		
+		let defaults = NSUserDefaults.standardUserDefaults()
+		
+		defaults.setDouble(latitude, forKey: "latitude")
+		defaults.setDouble(longitude, forKey: "longitude")
+		defaults.setDouble(latDelta, forKey: "latDelta")
+		defaults.setDouble(longDelta, forKey: "longDelta")
+	}
 	
+	static func checkIfThereAreSavedCoordinatesAndDecode() -> MKCoordinateRegion? {
+		
+		let defaults = NSUserDefaults.standardUserDefaults()
+		
+		let lat = defaults.doubleForKey("latitude")
+		let long = defaults.doubleForKey("longitude")
+		let latDelta = defaults.doubleForKey("latDelta")
+		let longDelta = defaults.doubleForKey("longDelta")
+		
+		if (lat + long + latDelta + longDelta) == 0 {
+			return nil
+		} else {
+			let createValues = MKRegionInformation(longitude: long, latitude: lat, latDelta: latDelta, longDelta: longDelta)
+			return createValues.returnMKCoordinateRegion()
+		}
+	}
 }
