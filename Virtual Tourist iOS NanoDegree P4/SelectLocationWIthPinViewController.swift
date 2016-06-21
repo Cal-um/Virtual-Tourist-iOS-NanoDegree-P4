@@ -11,18 +11,9 @@ import MapKit
 import CoreData
 
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
-
-	// Context passed from AppDelegate via ManagedObjectContextSettable.
+	
 	var managedObjectContext: NSManagedObjectContext!
 
   @IBOutlet weak var mapView: MKMapView!
-
-  
-	
-  
-  
-  
-  
-  
   
 }

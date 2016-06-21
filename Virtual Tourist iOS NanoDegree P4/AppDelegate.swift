@@ -12,11 +12,10 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
-	
   var window: UIWindow?
 
-
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		
 		guard let managedObjectContext = createVTMainContext() else { fatalError() }
 		guard let vc = window?.rootViewController as? ManagedObjectContextSettable else { fatalError("Wrong view controller type") }
 		vc.managedObjectContext = managedObjectContext

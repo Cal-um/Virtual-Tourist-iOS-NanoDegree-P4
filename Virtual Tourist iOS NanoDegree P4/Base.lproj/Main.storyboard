@@ -9,7 +9,7 @@
         <!--Select Location With Pin View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SelectLocationWithPinViewController" customModule="Virtual_Tourist_iOS_NanoDegree_P4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectLocationWithPinViewController" id="BYZ-38-t0r" customClass="SelectLocationWithPinViewController" customModule="Virtual_Tourist_iOS_NanoDegree_P4" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
