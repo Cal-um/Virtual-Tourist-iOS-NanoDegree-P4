@@ -12,6 +12,8 @@
 		3A18F2191CEDA5D7003141B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2181CEDA5D7003141B9 /* Assets.xcassets */; };
 		3A18F21C1CEDA5D7003141B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */; };
 		3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */; };
+		3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */; };
+		3AB127741D19AB830075070C /* MKRegionInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB127731D19AB830075070C /* MKRegionInformationTests.swift */; };
 		3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E801D13F3F600CA522B /* VT.xcdatamodeld */; };
 		3AF28E871D14003400CA522B /* VTStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E861D14003400CA522B /* VTStack.swift */; };
 		3AF28E8A1D14014F00CA522B /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF28E891D14014F00CA522B /* Pin.swift */; };
@@ -51,6 +53,8 @@
 		3A18F22D1CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual Tourist iOS NanoDegree P4UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A18F2331CEDA5D7003141B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationWIthPinViewController.swift; sourceTree = "<group>"; };
+		3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformation.swift; sourceTree = "<group>"; };
+		3AB127731D19AB830075070C /* MKRegionInformationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformationTests.swift; sourceTree = "<group>"; };
 		3AF28E811D13F3F600CA522B /* VT.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VT.xcdatamodel; sourceTree = "<group>"; };
 		3AF28E861D14003400CA522B /* VTStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTStack.swift; sourceTree = "<group>"; };
 		3AF28E891D14014F00CA522B /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
@@ -118,8 +122,9 @@
 		3A18F2251CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3AB127721D19AB3D0075070C /* View */,
+				3AB127711D19AB330075070C /* Model */,
 				3A18F2281CEDA5D7003141B9 /* Info.plist */,
-				3AF28E971D195EA500CA522B /* SelectLocationWithPinViewControllerTests.swift */,
 			);
 			path = "Virtual Tourist iOS NanoDegree P4Tests";
 			sourceTree = "<group>";
@@ -130,6 +135,22 @@
 				3A18F2331CEDA5D7003141B9 /* Info.plist */,
 			);
 			path = "Virtual Tourist iOS NanoDegree P4UITests";
+			sourceTree = "<group>";
+		};
+		3AB127711D19AB330075070C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3AB127731D19AB830075070C /* MKRegionInformationTests.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3AB127721D19AB3D0075070C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3AF28E971D195EA500CA522B /* SelectLocationWithPinViewControllerTests.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		3AF28E831D13FA6300CA522B /* VTModel */ = {
@@ -168,6 +189,7 @@
 		3AF28E881D1400B300CA522B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */,
 				3AF28E891D14014F00CA522B /* Pin.swift */,
 				3AF28E8B1D14015C00CA522B /* Photo.swift */,
 			);
@@ -328,6 +350,7 @@
 				3AF28E871D14003400CA522B /* VTStack.swift in Sources */,
 				3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */,
 				3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */,
+				3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */,
 				3AF28E931D140E6A00CA522B /* Utilities.swift in Sources */,
 				3AF28E961D1413AB00CA522B /* ManagedObjectContextSettable.swift in Sources */,
 				3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */,
@@ -338,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AB127741D19AB830075070C /* MKRegionInformationTests.swift in Sources */,
 				3AF28E981D195EA500CA522B /* SelectLocationWithPinViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

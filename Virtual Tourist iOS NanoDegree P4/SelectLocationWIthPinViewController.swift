@@ -14,6 +14,8 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	var managedObjectContext: NSManagedObjectContext!
 
+
   @IBOutlet weak var mapView: MKMapView!
-  
+	
+
 }
