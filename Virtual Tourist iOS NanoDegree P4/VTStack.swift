@@ -8,15 +8,17 @@
 
 import CoreData
 
-private let StoreURL = NSURL.documentsURL.URLByAppendingPathComponent(".Virtual Tourist iOS NanoDegree P4")
+private let StoreURL = NSURL.documentsURL.URLByAppendingPathComponent("VTDB.virtualTourist")
 
-public func createVTMainContext() -> NSManagedObjectContext {
+public func createVTMainContext() -> NSManagedObjectContext? {
 	
 	let bundles = [NSBundle(forClass: Pin.self), NSBundle(forClass: Photo.self)]
 	guard let model = NSManagedObjectModel.mergedModelFromBundles(bundles) else { fatalError("Model not found") }
 	
 	let psc = NSPersistentStoreCoordinator(managedObjectModel: model)
 	try! psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
+
+	
 	let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
 	context.persistentStoreCoordinator = psc
 	
