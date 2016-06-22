@@ -8,6 +8,7 @@
 
 import XCTest
 import MapKit
+import Foundation
 @testable import Virtual_Tourist_iOS_NanoDegree_P4
 
 class MKRegionInformationTests: XCTestCase {
@@ -48,10 +49,39 @@ class MKRegionInformationTests: XCTestCase {
 		// Then
 		XCTAssertTrue(region is MKCoordinateRegion)
 	}
+	
+	func testThatSaveCoordinateFunctionCanSave() {
+		
+		// Given 
+		let coordinate = CLLocationCoordinate2D(latitude: 20.50, longitude: 100.45)
+		let span = MKCoordinateSpan(latitudeDelta: 39, longitudeDelta: 10)
+		let region = MKCoordinateRegion(center: coordinate, span: span)
+		
+		let mockUserDefaults = MockUserDefaults(suiteName: "testing")!
+		var sut = MKRegionInformation(region: region)
+		
+		
+		
 
+	
+	
 }
 
-
+	class MockUserDefaults: NSUserDefaults {
+		var didSaveDoubleValue = false
+		
+		override func setDouble(value: Double, forKey defaultName: String) {
+			if defaultName == "latitude" || defaultName == "longitude" || defaultName == "latDelta" || defaultName == "longDelta" {
+				didSaveDoubleValue = true
+			}
+		}
+	}
+	
+	
+	
+	
+	
+}
 
 
 

@@ -32,6 +32,7 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="5tw-zT-tkM" id="gVn-GT-23t"/>
+                        <segue destination="KMS-cQ-hc6" kind="show" identifier="ShowPhotos" id="ssS-EH-uvx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

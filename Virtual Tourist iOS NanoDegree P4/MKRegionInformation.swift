@@ -9,12 +9,13 @@
 import MapKit
 import Foundation
 
-struct MKRegionInformation {
+class MKRegionInformation {
 	
 	let latitude: Double
 	let longitude: Double
 	let latDelta: Double
 	let longDelta: Double
+	var defaults = NSUserDefaults.standardUserDefaults()
 	
 	init(region: MKCoordinateRegion) {
 		
@@ -30,7 +31,6 @@ struct MKRegionInformation {
 		self.longitude = longitude
 		self.latDelta = latDelta
 		self.longDelta = longDelta
-		
 	}
 	
 	func returnMKCoordinateRegion() -> MKCoordinateRegion {
@@ -43,8 +43,7 @@ struct MKRegionInformation {
 	
 	func saveMapCoordinateRegionToUserDefualts() {
 		
-		let defaults = NSUserDefaults.standardUserDefaults()
-		
+
 		defaults.setDouble(latitude, forKey: "latitude")
 		defaults.setDouble(longitude, forKey: "longitude")
 		defaults.setDouble(latDelta, forKey: "latDelta")
