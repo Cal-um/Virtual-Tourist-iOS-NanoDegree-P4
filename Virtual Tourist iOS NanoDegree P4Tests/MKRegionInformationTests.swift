@@ -13,8 +13,16 @@ import Foundation
 
 class MKRegionInformationTests: XCTestCase {
 
+	var commonSpan: MKCoordinateSpan!
+	var commonCoord: CLLocationCoordinate2D!
+	var mockUserDefaults: MockUserDefaults!
+	
 	override func setUp() {
 			super.setUp()
+		
+		commonCoord = CLLocationCoordinate2D(latitude: 20.50, longitude: 100.45)
+		commonSpan = MKCoordinateSpan(latitudeDelta: 39, longitudeDelta: 10)
+		mockUserDefaults = MockUserDefaults(suiteName: "testing")!
 	}
 	
 	override func tearDown() {
@@ -30,9 +38,7 @@ class MKRegionInformationTests: XCTestCase {
 	func testThatItInitializesWithRegionInput() {
 		
 		// Given
-		let coordinate = CLLocationCoordinate2D(latitude: 20.50, longitude: 100.45)
-		let span = MKCoordinateSpan(latitudeDelta: 39, longitudeDelta: 10)
-		let region = MKCoordinateRegion(center: coordinate, span: span)
+		let region = MKCoordinateRegion(center: commonCoord, span: commonSpan)
 		// When
 		let sut = MKRegionInformation(region: region)
 		//Then
@@ -53,36 +59,53 @@ class MKRegionInformationTests: XCTestCase {
 	func testThatSaveCoordinateFunctionCanSave() {
 		
 		// Given 
-		let coordinate = CLLocationCoordinate2D(latitude: 20.50, longitude: 100.45)
-		let span = MKCoordinateSpan(latitudeDelta: 39, longitudeDelta: 10)
-		let region = MKCoordinateRegion(center: coordinate, span: span)
-		
-		let mockUserDefaults = MockUserDefaults(suiteName: "testing")!
+		let region = MKCoordinateRegion(center: commonCoord, span: commonSpan)
 		var sut = MKRegionInformation(region: region)
-		
-		
-		
-
-	
-	
+		sut.defaults = mockUserDefaults
+		// When
+		sut.saveMapCoordinateRegionToUserDefualts()
+		// Then 
+		XCTAssertTrue(mockUserDefaults.allTrue)
 }
-
+	
 	class MockUserDefaults: NSUserDefaults {
-		var didSaveDoubleValue = false
+		var didSaveLatitudeValue = false
+		var didSaveLongitudeValue = false
+		var didSaveLatDeltaValue = false
+		var didSaveLongDeltaValue = false
 		
-		override func setDouble(value: Double, forKey defaultName: String) {
-			if defaultName == "latitude" || defaultName == "longitude" || defaultName == "latDelta" || defaultName == "longDelta" {
-				didSaveDoubleValue = true
+		var didLoadLatitudeValue = false
+		var didLoadLongitudeValue = false
+		var didLoadLatDeltaValue = false
+		var didLoadLongDeltaValue = false
+		
+		var allTrue: Bool {
+			if didSaveLatDeltaValue == true && didSaveLongDeltaValue == true && didSaveLatitudeValue == true && didSaveLongitudeValue == true {
+				return true
+			} else {
+				return false
 			}
 		}
+		override func setDouble(value: Double, forKey defaultName: String) {
+			
+			switch defaultName {
+				case "latitude": didSaveLatitudeValue = true
+				case "longitude": didSaveLongitudeValue = true
+				case "longDelta" : didSaveLongDeltaValue = true
+				case "latDelta": didSaveLatDeltaValue = true
+				default: break
+			}
+		}
+		
+		override func doubleForKey(defaultName: String) -> Double {
+			switch defaultName {
+			case "latitude": didLoadLatitudeValue = true
+			case "longitude": didLoadLongitudeValue = true
+			case "longDelta" : didLoadLongDeltaValue = true
+			case "latDelta": didLoadLatDeltaValue = true
+			default: break
+			}
+		return 0
+		}
 	}
-	
-	
-	
-	
-	
 }
-
-
-
-

@@ -9,7 +9,7 @@
 import MapKit
 import Foundation
 
-class MKRegionInformation {
+struct MKRegionInformation {
 	
 	let latitude: Double
 	let longitude: Double
@@ -17,13 +17,14 @@ class MKRegionInformation {
 	let longDelta: Double
 	var defaults = NSUserDefaults.standardUserDefaults()
 	
+	
 	init(region: MKCoordinateRegion) {
 		
 		latitude = region.center.latitude
 		longitude = region.center.longitude
 		latDelta = region.span.latitudeDelta
 		longDelta = region.span.longitudeDelta
-	}
+			}
 	
 	init(longitude: Double, latitude: Double, latDelta: Double, longDelta: Double) {
 		
@@ -43,21 +44,20 @@ class MKRegionInformation {
 	
 	func saveMapCoordinateRegionToUserDefualts() {
 		
-
 		defaults.setDouble(latitude, forKey: "latitude")
 		defaults.setDouble(longitude, forKey: "longitude")
 		defaults.setDouble(latDelta, forKey: "latDelta")
 		defaults.setDouble(longDelta, forKey: "longDelta")
 	}
 	
+	// Could not find a way to properly test this function.
 	static func checkIfThereAreSavedCoordinatesAndDecode() -> MKCoordinateRegion? {
 		
-		let defaults = NSUserDefaults.standardUserDefaults()
-		
-		let lat = defaults.doubleForKey("latitude")
-		let long = defaults.doubleForKey("longitude")
-		let latDelta = defaults.doubleForKey("latDelta")
-		let longDelta = defaults.doubleForKey("longDelta")
+		let defaultsReference = NSUserDefaults.standardUserDefaults()
+		let lat = defaultsReference.doubleForKey("latitude")
+		let long = defaultsReference.doubleForKey("longitude")
+		let latDelta = defaultsReference.doubleForKey("latDelta")
+		let longDelta = defaultsReference.doubleForKey("longDelta")
 		
 		if (lat + long + latDelta + longDelta) == 0 {
 			return nil
