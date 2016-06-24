@@ -30,19 +30,20 @@
                             <constraint firstItem="5tw-zT-tkM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wZ3-WF-JXi"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="5vY-Au-2fk"/>
                     <connections>
                         <outlet property="mapView" destination="5tw-zT-tkM" id="gVn-GT-23t"/>
-                        <segue destination="KMS-cQ-hc6" kind="show" identifier="ShowPhotos" id="ssS-EH-uvx"/>
+                        <segue destination="e91-8n-ieN" kind="show" identifier="ShowPhotos" id="bEn-NE-R2w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="302"/>
+            <point key="canvasLocation" x="1083" y="302"/>
         </scene>
-        <!--View Controller-->
+        <!--Pin Selected View Controller-->
         <scene sceneID="BkC-8u-zSN">
             <objects>
-                <viewController id="JMm-ZS-hP8" sceneMemberID="viewController">
+                <viewController id="JMm-ZS-hP8" customClass="PinSelectedViewController" customModule="Virtual_Tourist_iOS_NanoDegree_P4" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jI5-1V-z51"/>
                         <viewControllerLayoutGuide type="bottom" id="EfI-rk-yw9"/>
@@ -87,29 +88,39 @@
                             <constraint firstItem="jjF-4r-OLX" firstAttribute="leading" secondItem="Kzy-CV-2hg" secondAttribute="leading" id="wv8-vN-oKl"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Zmj-qY-NyJ"/>
+                    <navigationItem key="navigationItem" id="Zmj-qY-NyJ">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="tGS-6h-nCZ">
+                            <connections>
+                                <action selector="buttonPressed:" destination="JMm-ZS-hP8" id="nhz-xF-OnS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="0Ct-iJ-gNm" id="bo7-jB-7Nw"/>
+                        <outlet property="mapView" destination="jjF-4r-OLX" id="aZY-Wo-Zsq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NA5-bI-anF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2197" y="302"/>
+            <point key="canvasLocation" x="2595" y="302"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="msr-eN-pEK">
+        <scene sceneID="JOL-WY-ZNB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KMS-cQ-hc6" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e91-8n-ieN" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="g1e-FR-3bp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="haj-zJ-rsc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="JMm-ZS-hP8" kind="relationship" relationship="rootViewController" id="Vga-Ra-kc7"/>
+                        <segue destination="JMm-ZS-hP8" kind="relationship" relationship="rootViewController" id="rEX-Mh-kt9"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zp0-2R-Mf5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wm5-4v-hjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1385" y="302"/>
+            <point key="canvasLocation" x="1783" y="302"/>
         </scene>
     </scenes>
 </document>

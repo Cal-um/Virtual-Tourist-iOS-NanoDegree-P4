@@ -7,12 +7,15 @@
 //
 import CoreData
 import XCTest
+import MapKit
+
 @testable import Virtual_Tourist_iOS_NanoDegree_P4
 
 class SelectLocationWithPinViewControllerTests: XCTestCase {
 
 	var managedObjectContext: NSManagedObjectContext!
 	var sut: SelectLocationWithPinViewController!
+
 	
 	
 	override func setUp() {
@@ -21,6 +24,7 @@ class SelectLocationWithPinViewControllerTests: XCTestCase {
 		
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		sut = storyboard.instantiateViewControllerWithIdentifier("SelectLocationWithPinViewController") as! SelectLocationWithPinViewController
+
 		
 	}
     
@@ -30,7 +34,7 @@ class SelectLocationWithPinViewControllerTests: XCTestCase {
 	}
 
 	
-	func testThatMOCCanBePassedToProperty() {
+	func testThatMOCCanBePassedToMOCProperty() {
 		// Given in setUp()
 		// When
 		sut.managedObjectContext = managedObjectContext
@@ -45,40 +49,33 @@ class SelectLocationWithPinViewControllerTests: XCTestCase {
 		// Then
 		XCTAssertNotNil(sut.mapView)
 	}
-
-
-	func testThatRegionInformationCanBeExtractedFromMapView() {
-		
-		// Given in setUp()
-		// When
-		_ = sut.view
-		
 	
+
+	func setUpInMemoryMainManagedObjectContext() -> NSManagedObjectContext  {
+		
+		let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])
+		let psc = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
+		
+		do {
+			try psc.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+			} catch { print("add in memory store failed")
+		}
+		
+		let managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+		managedObjectContext.persistentStoreCoordinator = psc
+		
+		return managedObjectContext
 	}
+	
+	
 
 }
 
-
-
-
-
-
-
-
-func setUpInMemoryMainManagedObjectContext() -> NSManagedObjectContext  {
+class MockMapView: MKMapView {
 	
-	let managedObjectModel = NSManagedObjectModel.mergedModelFromBundles([NSBundle.mainBundle()])
-	let psc = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel!)
+	var regionWasSet = false
 	
-	do {
-		try psc.addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
-		} catch { print("add in memory store failed")
+	override func setRegion(region: MKCoordinateRegion, animated: Bool) {
+		regionWasSet = true
 	}
-	
-	let managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
-	managedObjectContext.persistentStoreCoordinator = psc
-	
-	return managedObjectContext
 }
-
-
