@@ -12,6 +12,7 @@ import CoreData
 
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
 	
+	var shortTapOnPin: Bool = false
 	var managedObjectContext: NSManagedObjectContext!
 	var annotations: [MKAnnotation] {
 		let coord = CLLocationCoordinate2D(latitude: 57.70, longitude: -2.74)
@@ -35,7 +36,13 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		// Configure map press
 		mapView.delegate = self
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressAction))
+		longPress.minimumPressDuration = 1.0
 		mapView.addGestureRecognizer(longPress)
+		
+		let shortPress = UITapGestureRecognizer(target: self, action: #selector(self.shortPressAction))
+		mapView.addGestureRecognizer(shortPress)
+		
+		print(mapView.gestureRecognizers)
 		mapView.addAnnotations(annotations)
 	}
 
@@ -52,7 +59,10 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	}
 	
 	func longPressAction(gesture: UIGestureRecognizer) {
-		if gesture.state != .Began { return }
+		
+		//if gesture.state != .Began { return }
+		
+		print("longPressAction state of shortTapOnPin = \(shortTapOnPin)")
 		let touchLocation = gesture.locationInView(self.mapView)
 		let touchMapCoord = mapView.convertPoint(touchLocation, toCoordinateFromView: mapView)
 		
@@ -61,7 +71,15 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		
 		mapView.addAnnotation(annotation)
 	}
+	
+	func shortPressAction(gesture: UIGestureRecognizer) {
+		//if gesture.state != .Began { return }
+			print("shortPressAction state of shortTapOnPin = \(shortTapOnPin)")
+			shortTapOnPin = true
+		
+	}
 }
+
 
 
 extension SelectLocationWithPinViewController: MKMapViewDelegate {
@@ -74,6 +92,7 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 			pinView?.draggable = true
 			pinView?.selected = true
 			pinView?.animatesDrop = true
+			pinView?.pinTintColor = UIColor.greenColor()
 		} else {
 			pinView?.annotation = annotation
 		}
@@ -81,14 +100,18 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	}
 	
 	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-		if newState == MKAnnotationViewDragState.Ending {
+		if newState != MKAnnotationViewDragState.Ending {
 			// TODO: this is where to delete the old pin from core data and save the new one.
 			let droppedAt = view.annotation?.coordinate
 			print(droppedAt)
+			shortTapOnPin = false
 		}
 	}
-	
+
 	func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+		if shortTapOnPin == true {
+			print("didSelectAnnotationView state of shortTapOnPin = \(shortTapOnPin)")
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
+		}
 	}
 }
