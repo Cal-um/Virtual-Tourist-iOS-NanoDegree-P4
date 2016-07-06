@@ -12,6 +12,13 @@
 		3A18F2191CEDA5D7003141B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2181CEDA5D7003141B9 /* Assets.xcassets */; };
 		3A18F21C1CEDA5D7003141B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */; };
 		3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */; };
+		3A203F0E1D2C431000216547 /* Webservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F0D1D2C431000216547 /* Webservice.swift */; };
+		3A203F101D2C43A200216547 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F0F1D2C43A200216547 /* Resource.swift */; };
+		3A203F141D2C45D700216547 /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F131D2C45D700216547 /* CollectionViewDataSource.swift */; };
+		3A203F161D2C4BC100216547 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F151D2C4BC100216547 /* PhotoCollectionViewCell.swift */; };
+		3A203F181D2D387500216547 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F171D2D387500216547 /* DataSourceDelegate.swift */; };
+		3A203F1A1D2D3A5000216547 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F191D2D3A5000216547 /* DataProvider.swift */; };
+		3A203F1C1D2D3B1F00216547 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F1B1D2D3B1F00216547 /* ConfigurableCell.swift */; };
 		3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */; };
 		3AB127741D19AB830075070C /* MKRegionInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB127731D19AB830075070C /* MKRegionInformationTests.swift */; };
 		3ADBE7921D1DEA010011FB2D /* PinSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBE7911D1DEA010011FB2D /* PinSelectedViewController.swift */; };
@@ -54,6 +61,13 @@
 		3A18F22D1CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual Tourist iOS NanoDegree P4UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A18F2331CEDA5D7003141B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationWIthPinViewController.swift; sourceTree = "<group>"; };
+		3A203F0D1D2C431000216547 /* Webservice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Webservice.swift; sourceTree = "<group>"; };
+		3A203F0F1D2C43A200216547 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		3A203F131D2C45D700216547 /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
+		3A203F151D2C4BC100216547 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		3A203F171D2D387500216547 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		3A203F191D2D3A5000216547 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		3A203F1B1D2D3B1F00216547 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformation.swift; sourceTree = "<group>"; };
 		3AB127731D19AB830075070C /* MKRegionInformationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformationTests.swift; sourceTree = "<group>"; };
 		3ADBE7911D1DEA010011FB2D /* PinSelectedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinSelectedViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +153,33 @@
 			path = "Virtual Tourist iOS NanoDegree P4UITests";
 			sourceTree = "<group>";
 		};
+		3A203F0C1D2C42BD00216547 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				3A203F0D1D2C431000216547 /* Webservice.swift */,
+				3A203F0F1D2C43A200216547 /* Resource.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		3A203F111D2C458300216547 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A203F151D2C4BC100216547 /* PhotoCollectionViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		3A203F121D2C459000216547 /* Data Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3A203F131D2C45D700216547 /* CollectionViewDataSource.swift */,
+				3A203F171D2D387500216547 /* DataSourceDelegate.swift */,
+				3A203F191D2D3A5000216547 /* DataProvider.swift */,
+			);
+			name = "Data Sources";
+			sourceTree = "<group>";
+		};
 		3AB127711D19AB330075070C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,24 +210,27 @@
 		3AF28E841D13FA9100CA522B /* VT */ = {
 			isa = PBXGroup;
 			children = (
+				3A203F121D2C459000216547 /* Data Sources */,
+				3A203F111D2C458300216547 /* Views */,
+				3A203F0C1D2C42BD00216547 /* Client */,
 				3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */,
 				3A18F2151CEDA5D7003141B9 /* Main.storyboard */,
 				3A18F2181CEDA5D7003141B9 /* Assets.xcassets */,
 				3A18F21A1CEDA5D7003141B9 /* LaunchScreen.storyboard */,
 				3A18F21D1CEDA5D7003141B9 /* Info.plist */,
 				3AF28E941D14139100CA522B /* Protocols */,
-				3AF28E851D13FA9B00CA522B /* Views */,
+				3AF28E851D13FA9B00CA522B /* View Controllers */,
 			);
 			name = VT;
 			sourceTree = "<group>";
 		};
-		3AF28E851D13FA9B00CA522B /* Views */ = {
+		3AF28E851D13FA9B00CA522B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				3A18F23F1CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift */,
 				3ADBE7911D1DEA010011FB2D /* PinSelectedViewController.swift */,
 			);
-			name = Views;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		3AF28E881D1400B300CA522B /* Model */ = {
@@ -212,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				3AF28E951D1413AB00CA522B /* ManagedObjectContextSettable.swift */,
+				3A203F1B1D2D3B1F00216547 /* ConfigurableCell.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -349,15 +394,22 @@
 			files = (
 				3ADBE7921D1DEA010011FB2D /* PinSelectedViewController.swift in Sources */,
 				3AF28E901D1403E700CA522B /* ManagedObject.swift in Sources */,
+				3A203F0E1D2C431000216547 /* Webservice.swift in Sources */,
 				3AF28E8C1D14015C00CA522B /* Photo.swift in Sources */,
+				3A203F101D2C43A200216547 /* Resource.swift in Sources */,
 				3AF28E8A1D14014F00CA522B /* Pin.swift in Sources */,
 				3AF28E871D14003400CA522B /* VTStack.swift in Sources */,
 				3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */,
 				3A18F2401CEDA62F003141B9 /* SelectLocationWIthPinViewController.swift in Sources */,
+				3A203F181D2D387500216547 /* DataSourceDelegate.swift in Sources */,
 				3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */,
 				3AF28E931D140E6A00CA522B /* Utilities.swift in Sources */,
+				3A203F1C1D2D3B1F00216547 /* ConfigurableCell.swift in Sources */,
+				3A203F161D2C4BC100216547 /* PhotoCollectionViewCell.swift in Sources */,
+				3A203F1A1D2D3A5000216547 /* DataProvider.swift in Sources */,
 				3AF28E961D1413AB00CA522B /* ManagedObjectContextSettable.swift in Sources */,
 				3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */,
+				3A203F141D2C45D700216547 /* CollectionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

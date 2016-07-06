@@ -13,7 +13,9 @@ import CoreData
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
 	
 	var shortTapOnPin: Bool = false
+	
 	var managedObjectContext: NSManagedObjectContext!
+	
 	var annotations: [MKAnnotation] {
 		let coord = CLLocationCoordinate2D(latitude: 57.70, longitude: -2.74)
 		let anno1 = MKPointAnnotation()
@@ -30,7 +32,6 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	override func viewDidLoad() {
 
-		
 		loadCoordinatesIfSavedOnLastSession()
 		
 		// Configure map press
@@ -60,7 +61,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	func longPressAction(gesture: UIGestureRecognizer) {
 		
-		//if gesture.state != .Began { return }
+		if gesture.state != .Began { return }
 		
 		print("longPressAction state of shortTapOnPin = \(shortTapOnPin)")
 		let touchLocation = gesture.locationInView(self.mapView)
@@ -76,7 +77,6 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		//if gesture.state != .Began { return }
 			print("shortPressAction state of shortTapOnPin = \(shortTapOnPin)")
 			shortTapOnPin = true
-		
 	}
 }
 
