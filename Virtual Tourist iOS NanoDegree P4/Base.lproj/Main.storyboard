@@ -82,17 +82,23 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yhe-q9-CE0">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5mr-DY-HtA">
+                                                    <rect key="frame" x="40" y="40" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="yhe-q9-CE0" firstAttribute="leading" secondItem="GxA-kV-3mP" secondAttribute="leading" id="6tr-A1-YLx"/>
                                             <constraint firstItem="yhe-q9-CE0" firstAttribute="top" secondItem="GxA-kV-3mP" secondAttribute="top" id="H3s-Aj-SaN"/>
+                                            <constraint firstItem="5mr-DY-HtA" firstAttribute="centerX" secondItem="GxA-kV-3mP" secondAttribute="centerX" id="Lhi-cY-RLK"/>
                                             <constraint firstAttribute="trailing" secondItem="yhe-q9-CE0" secondAttribute="trailing" id="Z9k-UK-JOM"/>
+                                            <constraint firstItem="5mr-DY-HtA" firstAttribute="centerY" secondItem="GxA-kV-3mP" secondAttribute="centerY" id="wRi-xl-guE"/>
                                             <constraint firstAttribute="bottom" secondItem="yhe-q9-CE0" secondAttribute="bottom" id="zN8-t6-qcW"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="yhe-q9-CE0" id="IOr-IO-5Ai"/>
+                                            <outlet property="loadingWheel" destination="5mr-DY-HtA" id="dFp-mE-k0r"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

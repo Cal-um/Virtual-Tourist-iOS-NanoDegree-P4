@@ -20,7 +20,7 @@ class PinSelectedViewController: UIViewController {
 	}
 	
 	override func viewDidLoad() {
-		
+		 
 	}
 	
 	func setUpCollectionView() {
