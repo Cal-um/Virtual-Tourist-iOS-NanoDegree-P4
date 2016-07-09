@@ -43,7 +43,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 	
 	private let collectionView: UICollectionView
 	private let dataProvider: Data
-	private weak var delegate = Delegate!
+	private weak var delegate = Delegate
 	
 	// MARK: CollectionViewDataSource
 	

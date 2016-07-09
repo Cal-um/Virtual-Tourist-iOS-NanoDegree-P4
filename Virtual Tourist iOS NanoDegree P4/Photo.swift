@@ -11,4 +11,5 @@ import CoreData
 
 public final class Photo: ManagedObject {
 	@NSManaged public private(set) var photoImage: UIImage
+	@NSManaged public private(set) var owner: Pin
 }

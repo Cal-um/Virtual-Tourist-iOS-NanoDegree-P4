@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
-		guard let managedObjectContext = createVTMainContext() else { fatalError() }
+		guard let stack = CoreDataStack() else { fatalError() }
 		guard let vc = window?.rootViewController as? ManagedObjectContextSettable else { fatalError("Wrong view controller type") }
-		vc.managedObjectContext = managedObjectContext
+		vc.managedObjectContexts = stack
 		return true
   }
 

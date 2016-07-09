@@ -13,26 +13,18 @@ import CoreData
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
 	
 	var shortTapOnPin: Bool = false
+	var managedObjectContexts: CoreDataStack!
+	var selectedpin: Pin?
 	
-	var managedObjectContext: NSManagedObjectContext!
-	
-	var annotations: [MKAnnotation] {
-		let coord = CLLocationCoordinate2D(latitude: 57.70, longitude: -2.74)
-		let anno1 = MKPointAnnotation()
-		anno1.coordinate = coord
-		let anno2 = MKPointAnnotation()
-		anno2.coordinate = CLLocationCoordinate2D(latitude: 57.68, longitude: -2.72)
-		var temp: [MKAnnotation] = []
-		temp.append(anno1)
-		temp.append(anno2)
-		return temp
-	}
+	var annotations: [MKAnnotation]?
 
   @IBOutlet weak var mapView: MKMapView!
 	
 	override func viewDidLoad() {
-
-		loadCoordinatesIfSavedOnLastSession()
+	
+		loadMapViewLastRegion()
+		annotations = managedObjectContexts.fetchPins()
+		
 		
 		// Configure map press
 		mapView.delegate = self
@@ -44,7 +36,10 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		mapView.addGestureRecognizer(shortPress)
 		
 		print(mapView.gestureRecognizers)
-		mapView.addAnnotations(annotations)
+		
+		if let annotations = annotations {
+			mapView.addAnnotations(annotations)
+		}
 	}
 
 	override func viewWillDisappear(animated: Bool) {
@@ -53,7 +48,20 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		currentRegion.saveMapCoordinateRegionToUserDefualts()
 	}
 	
-	func loadCoordinatesIfSavedOnLastSession() {
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == "ShowPhotos" {
+			guard let nc = segue.destinationViewController as? UINavigationController, vc = nc.viewControllers.first as? ManagedObjectContextSettable else {
+				fatalError("Wrong view controller type")
+			}
+			guard let pin = selectedPin else { fatalError("No pin was selected") }
+			vc.managedObjectContexts = managedObjectContexts
+			vc.selectedpin = pin
+		}
+	}
+	
+	
+	
+	func loadMapViewLastRegion() {
 		
 		guard let hasRegion = MKRegionInformation.checkIfThereAreSavedCoordinatesAndDecode() else { return }
 			mapView.setRegion(hasRegion, animated: true)
@@ -111,6 +119,8 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
 		if shortTapOnPin == true {
 			print("didSelectAnnotationView state of shortTapOnPin = \(shortTapOnPin)")
+			selectedPinForSegue = getWhichPinWasTappedFromContext()
+			
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
 		}
 	}

@@ -12,4 +12,5 @@ import CoreData
 public final class Pin: ManagedObject {
 	@NSManaged public private(set) var longitude: Double
 	@NSManaged public private(set) var latutude: Double
+	@NSManaged private(set) var locationPhotos: Set<Photo>?
 }

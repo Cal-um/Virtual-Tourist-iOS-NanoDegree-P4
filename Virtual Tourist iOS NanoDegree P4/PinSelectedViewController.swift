@@ -9,7 +9,10 @@
 import UIKit
 import MapKit
 
-class PinSelectedViewController: UIViewController {
+class PinSelectedViewController: UIViewController, ManagedObjectContextSettable {
+	
+	var managedObjectContexts: CoreDataStack!
+	var selectedpin: Pin?
 	
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 	@IBOutlet weak var collectionView: UICollectionView!
