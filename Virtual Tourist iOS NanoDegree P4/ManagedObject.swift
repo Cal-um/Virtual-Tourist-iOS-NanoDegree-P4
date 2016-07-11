@@ -10,3 +10,8 @@ import CoreData
 
 public class ManagedObject: NSManagedObject {
 }
+
+public protocol ManagedObjectType: class {
+		static var entityName: String { get }
+}
+

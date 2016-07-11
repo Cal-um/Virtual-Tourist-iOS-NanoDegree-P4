@@ -10,6 +10,12 @@ import UIKit
 import CoreData
 
 public final class Photo: ManagedObject {
-	@NSManaged public private(set) var photoImage: UIImage
-	@NSManaged public private(set) var owner: Pin
+	@NSManaged public var photoImage: UIImage
+	@NSManaged public var owner: Pin
+}
+
+extension Photo: ManagedObjectType {
+	public static var entityName: String {
+		return "Photo"
+	}
 }

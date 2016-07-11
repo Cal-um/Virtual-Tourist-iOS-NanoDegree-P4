@@ -95,12 +95,11 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	func convertPinToMKPointAnnotation(pin: Pin) -> MKPointAnnotation {
 		
-		let coord = CLLocationCoordinate2D(latitude: pin.latutude, longitude: pin.longitude)
+		let coord = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
 		let MKPin = MKPointAnnotation()
 		MKPin.coordinate = coord
 		return MKPin
 	}
-	
 }
 
 
@@ -137,6 +136,14 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 			//selectedPinForSegue = getWhichPinWasTappedFromContext()
 			
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
+		}
+	}
+	
+	func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+		if views.count == 1 {
+			if let view = views.first, pin = view.annotation {
+				Pin.insertPinIntoContext(pin, context: managedObjectContexts)
+			}
 		}
 	}
 }
