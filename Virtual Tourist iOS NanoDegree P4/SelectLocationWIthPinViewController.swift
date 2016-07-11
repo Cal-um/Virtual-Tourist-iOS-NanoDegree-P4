@@ -15,15 +15,21 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	var shortTapOnPin: Bool = false
 	var managedObjectContexts: CoreDataStack!
 	var selectedpin: Pin?
-	
-	var annotations: [MKAnnotation]?
+	var fetchedPins = [Pin]?()
+	var annotations = [MKPointAnnotation]()
 
   @IBOutlet weak var mapView: MKMapView!
 	
 	override func viewDidLoad() {
 	
 		loadMapViewLastRegion()
-		annotations = managedObjectContexts.fetchPins()
+		fetchedPins = managedObjectContexts.fetchPins().map { pins in return pins as! [Pin] }
+		if let pins = fetchedPins {
+			for i in pins {
+				let pin = convertPinToMKPointAnnotation(i)
+				annotations.append(pin)
+			}
+		}
 		
 		
 		// Configure map press
@@ -37,7 +43,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		
 		print(mapView.gestureRecognizers)
 		
-		if let annotations = annotations {
+		if annotations.count > 0 {
 			mapView.addAnnotations(annotations)
 		}
 	}
@@ -50,10 +56,10 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "ShowPhotos" {
-			guard let nc = segue.destinationViewController as? UINavigationController, vc = nc.viewControllers.first as? ManagedObjectContextSettable else {
+			guard let nc = segue.destinationViewController as? UINavigationController, var vc = nc.viewControllers.first as? protocol<ManagedObjectContextSettable, SelectedPinSettable> else {
 				fatalError("Wrong view controller type")
 			}
-			guard let pin = selectedPin else { fatalError("No pin was selected") }
+			guard let pin = selectedpin else { fatalError("No pin was selected") }
 			vc.managedObjectContexts = managedObjectContexts
 			vc.selectedpin = pin
 		}
@@ -86,6 +92,15 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 			print("shortPressAction state of shortTapOnPin = \(shortTapOnPin)")
 			shortTapOnPin = true
 	}
+	
+	func convertPinToMKPointAnnotation(pin: Pin) -> MKPointAnnotation {
+		
+		let coord = CLLocationCoordinate2D(latitude: pin.latutude, longitude: pin.longitude)
+		let MKPin = MKPointAnnotation()
+		MKPin.coordinate = coord
+		return MKPin
+	}
+	
 }
 
 
@@ -119,7 +134,7 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
 		if shortTapOnPin == true {
 			print("didSelectAnnotationView state of shortTapOnPin = \(shortTapOnPin)")
-			selectedPinForSegue = getWhichPinWasTappedFromContext()
+			//selectedPinForSegue = getWhichPinWasTappedFromContext()
 			
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
 		}

@@ -10,5 +10,4 @@ import CoreData
 
 protocol ManagedObjectContextSettable: class {
 	var managedObjectContexts: CoreDataStack! { get set }
-	var selectedpin: Pin? { get set }
 }

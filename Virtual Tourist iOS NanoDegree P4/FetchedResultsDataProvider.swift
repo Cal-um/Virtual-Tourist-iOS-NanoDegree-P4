@@ -8,25 +8,18 @@
 
 import CoreData
 
-class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, DataProvider {
+class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, DataProvider, NSFetchedResultsControllerDelegate {
 	
 	typealias Object = Delegate.Object
 	
 	init(fetchedResultsController: NSFetchedResultsController, delegate: Delegate) {
-		self.fetchedResultsController = fetchedResutlsController
+		self.fetchedResultsController = fetchedResultsController
 		self.delegate = delegate
 		super.init()
 		fetchedResultsController.delegate = self
 		try! fetchedResultsController.performFetch()
 	}
-	
-	func reconfigureFetchRequest(@noescape block: NSFetchRequest -> ()) {
-		NSFetchedResultsController.deleteCacheWithName(fetchedResultsController.cacheName)
-		block(fetchedResultsController.fetchRequest)
-		do { try fetchedResultsController.performFetch() } catch { fatalError("fetch request failed") }
-		delegate.dataProviderDidUpdate(nil)
-	}
-	
+		
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object {
 		guard let result = fetchedResultsController.objectAtIndexPath(indexPath) as? Object else { fatalError("Unexpected object at \(indexPath)") }
 		return result
@@ -43,6 +36,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	private weak var delegate: Delegate!
 	private var updates: [DataProviderUpdate<Object>] = []
 	
+
 	
 	// MARK: NSFetchedResultsControllerDelegate
 	

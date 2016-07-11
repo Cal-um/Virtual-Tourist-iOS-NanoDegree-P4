@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import CoreData
 import MapKit
 
-class PinSelectedViewController: UIViewController, ManagedObjectContextSettable {
+class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable {
 	
 	var managedObjectContexts: CoreDataStack!
-	var selectedpin: Pin?
+	var selectedpin: Pin!
+	
 	
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -23,11 +25,20 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable 
 	}
 	
 	override func viewDidLoad() {
+		
 		 
 	}
 	
-	func setUpCollectionView() {
+	private typealias PhotosDataProvider = FetchedResultsDataProvider<PinSelectedViewController>
+	private var dataSource: CollectionViewDataSource<PinSelectedViewController, PhotosDataProvider, PhotoCollectionViewCell>!
 	
+	private func setUpCollectionView() {
+	  let request = NSFetchRequest(entityName: "Photo")
+		let pin = selectedpin
+		let pred = NSPredicate(format: "owner = %@", argumentArray: [pin])
+		request.predicate = pred
+		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContexts.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
 		guard let cv = collectionView else { fatalError("must have collection view") }
 		dataSource = CollectionViewDataSource(collectionView: cv, dataProvider: dataProvider, delegate: self)
 		
@@ -38,6 +49,12 @@ extension PinSelectedViewController: DataSourceDelegate {
 		
 	func cellIdentifierForObject(object: Photo) -> String {
 		return "photoCell"
+	}
+}
+
+extension PinSelectedViewController: DataProviderDelegate {
+	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
+		dataSource.processUpdates(updates)
 	}
 }
 	

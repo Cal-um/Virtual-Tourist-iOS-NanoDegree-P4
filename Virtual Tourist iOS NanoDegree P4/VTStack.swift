@@ -76,6 +76,14 @@ extension CoreDataStack {
 			}
 		}
 	}
+	
+	// returns saved pins if any.
+	func fetchPins() -> [AnyObject]? {
+		let fr = NSFetchRequest(entityName: "Pin")
+		let pins = try? mainContext.executeFetchRequest(fr)
+		return pins
+	}
+	
 }
 	
 

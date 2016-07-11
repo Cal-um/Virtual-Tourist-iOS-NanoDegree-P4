@@ -11,9 +11,10 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
 	
 	@IBOutlet weak var imageView: UIImageView!
-	
 	@IBOutlet weak var loadingWheel: UIActivityIndicatorView!
-	
+}
+
+extension PhotoCollectionViewCell: ConfigurableCell {
 	func configureCell(photoObject: Photo) {
 		imageView.image = photoObject.photoImage
 	}

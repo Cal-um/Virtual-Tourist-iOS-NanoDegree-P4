@@ -8,5 +8,5 @@
 
 protocol ConfigurableCell {
 	associatedtype DataSource
-	func configureForObject(object: DataSource)
+	func configureCell(object: DataSource)
 }

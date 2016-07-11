@@ -9,7 +9,6 @@
 import UIKit
 
 protocol DataProvider: class {
-	
 	associatedtype Object
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object
 	func numberOfItemsInSection(section: Int) -> Int
@@ -19,7 +18,6 @@ protocol DataProviderDelegate: class {
 	associatedtype Object
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]?)
 }
-
 
 enum DataProviderUpdate<Object> {
 	case Insert(NSIndexPath)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider, Cell: UICollectionViewCell where Delegate.Object == Data.Object, Cell: ConfigurableCell, Cell.DataSource == Data.Object>: NSObject, UICollectionViewDataSource {
+class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider, Cell: UICollectionViewCell where Delegate.Object == Data.Object, Cell: ConfigurableCell, Cell.DataSource == Data.Object>: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
 	
 	required init(collectionView: UICollectionView, dataProvider: Data, delegate: Delegate) {
 		self.collectionView = collectionView
@@ -16,7 +16,9 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 		self.delegate = delegate
 		super.init()
 		collectionView.dataSource = self
+		collectionView.delegate = self
 		collectionView.reloadData()
+		
 	}
 	
 	func processUpdates(updates: [DataProviderUpdate<Data.Object>]?) {
@@ -28,7 +30,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 					self.collectionView.insertItemsAtIndexPaths([indexPath])
 				case .Update(let indexPath, let object):
 					guard let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as? Cell else { fatalError("wrong cell type") }
-					cell.configureForObject(object)
+					cell.configureCell(object)
 				case .Move(let indexPath, let newIndexPath):
 					self.collectionView.deleteItemsAtIndexPaths([indexPath])
 					self.collectionView.insertItemsAtIndexPaths([newIndexPath])
@@ -43,7 +45,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 	
 	private let collectionView: UICollectionView
 	private let dataProvider: Data
-	private weak var delegate = Delegate
+	private weak var delegate: Delegate!
 	
 	// MARK: CollectionViewDataSource
 	
@@ -55,7 +57,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 		let object = dataProvider.objectAtIndexPath(indexPath)
 		let identifier = delegate.cellIdentifierForObject(object)
 		guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as? Cell else { fatalError("Unexpected cell type at \(indexPath)") }
-		cell.configureForObject(object)
+		cell.configureCell(object)
 		return cell
 	}
 	
