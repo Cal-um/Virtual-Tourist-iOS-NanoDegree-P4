@@ -17,6 +17,7 @@ protocol DataProvider: class {
 protocol DataProviderDelegate: class {
 	associatedtype Object
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]?)
+	func callBackSelectedPin() -> Pin
 }
 
 enum DataProviderUpdate<Object> {
@@ -25,3 +26,4 @@ enum DataProviderUpdate<Object> {
 	case Move(NSIndexPath, NSIndexPath)
 	case Delete(NSIndexPath)
 }
+

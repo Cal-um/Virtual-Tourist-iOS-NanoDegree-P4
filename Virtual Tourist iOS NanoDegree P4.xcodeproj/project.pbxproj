@@ -21,6 +21,7 @@
 		3A203F1C1D2D3B1F00216547 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F1B1D2D3B1F00216547 /* ConfigurableCell.swift */; };
 		3A203F1E1D2D789000216547 /* FetchedResultsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F1D1D2D789000216547 /* FetchedResultsDataProvider.swift */; };
 		3A203F201D325BF100216547 /* SelectedPinSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F1F1D325BF100216547 /* SelectedPinSettable.swift */; };
+		3A203F221D354D8D00216547 /* FlikrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A203F211D354D8D00216547 /* FlikrConvenience.swift */; };
 		3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */; };
 		3AB127741D19AB830075070C /* MKRegionInformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB127731D19AB830075070C /* MKRegionInformationTests.swift */; };
 		3ADBE7921D1DEA010011FB2D /* PinSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBE7911D1DEA010011FB2D /* PinSelectedViewController.swift */; };
@@ -72,6 +73,7 @@
 		3A203F1B1D2D3B1F00216547 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		3A203F1D1D2D789000216547 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
 		3A203F1F1D325BF100216547 /* SelectedPinSettable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPinSettable.swift; sourceTree = "<group>"; };
+		3A203F211D354D8D00216547 /* FlikrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlikrConvenience.swift; sourceTree = "<group>"; };
 		3AB1276F1D19A3C80075070C /* MKRegionInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformation.swift; sourceTree = "<group>"; };
 		3AB127731D19AB830075070C /* MKRegionInformationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRegionInformationTests.swift; sourceTree = "<group>"; };
 		3ADBE7911D1DEA010011FB2D /* PinSelectedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinSelectedViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				3A203F0D1D2C431000216547 /* Webservice.swift */,
 				3A203F0F1D2C43A200216547 /* Resource.swift */,
+				3A203F211D354D8D00216547 /* FlikrConvenience.swift */,
 			);
 			name = Client;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				3AB127701D19A3C80075070C /* MKRegionInformation.swift in Sources */,
 				3A203F201D325BF100216547 /* SelectedPinSettable.swift in Sources */,
 				3AF28E931D140E6A00CA522B /* Utilities.swift in Sources */,
+				3A203F221D354D8D00216547 /* FlikrConvenience.swift in Sources */,
 				3A203F1C1D2D3B1F00216547 /* ConfigurableCell.swift in Sources */,
 				3A203F161D2C4BC100216547 /* PhotoCollectionViewCell.swift in Sources */,
 				3A203F1A1D2D3A5000216547 /* DataProvider.swift in Sources */,

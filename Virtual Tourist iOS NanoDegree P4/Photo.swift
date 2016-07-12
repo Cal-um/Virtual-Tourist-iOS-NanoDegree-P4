@@ -19,3 +19,4 @@ extension Photo: ManagedObjectType {
 		return "Photo"
 	}
 }
+

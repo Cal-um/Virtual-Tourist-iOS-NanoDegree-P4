@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SelectedPinSettable {
-	var selectedpin: Pin! { get set }
+	var selectedPin: Pin! { get set }
 }

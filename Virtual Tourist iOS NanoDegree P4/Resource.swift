@@ -12,20 +12,16 @@ typealias JSONDictionary = [String:AnyObject]
 
 struct Resource<A> {
 	let url: NSURL
-	let parse: NSData -> Result<A>
+	let parse: NSData -> A?
 }
 
 extension Resource {
-	
-	init(url: NSURL, parseJSON: AnyObject -> Result<A>) {
+	init(url: NSURL, parseJSON: AnyObject -> A?) {
 		self.url = url
 		self.parse = { data in
-			do {
-				let jsonData = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-				return parseJSON(jsonData)
-			} catch {
-				return .Failure(.ParseError)
-			}
+			let jsonData = try? NSJSONSerialization.JSONObjectWithData(data, options: [])
+			return jsonData.flatMap(parseJSON)
 		}
 	}
 }
+

@@ -15,6 +15,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	init(fetchedResultsController: NSFetchedResultsController, delegate: Delegate) {
 		self.fetchedResultsController = fetchedResultsController
 		self.delegate = delegate
+		self.pin = delegate.callBackSelectedPin()
 		super.init()
 		fetchedResultsController.delegate = self
 		try! fetchedResultsController.performFetch()
@@ -26,7 +27,10 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	}
 	
 	func numberOfItemsInSection(section: Int) -> Int {
-		guard let sec = fetchedResultsController.sections?[section] else { return 0 }
+		guard let sec = fetchedResultsController.sections?[section] else {
+			
+			return 0
+		}
 		return sec.numberOfObjects
 	}
 	
@@ -35,8 +39,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	private let fetchedResultsController: NSFetchedResultsController
 	private weak var delegate: Delegate!
 	private var updates: [DataProviderUpdate<Object>] = []
-	
-
+	private var pin: Pin!
 	
 	// MARK: NSFetchedResultsControllerDelegate
 	
@@ -65,7 +68,5 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	
 	func controllerDidChangeContent(controller: NSFetchedResultsController) {
 		delegate.dataProviderDidUpdate(updates)
-	}
-
-	
+	}	
 }

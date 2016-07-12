@@ -13,7 +13,7 @@ import MapKit
 class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable {
 	
 	var managedObjectContexts: CoreDataStack!
-	var selectedpin: Pin!
+	var selectedPin: Pin!
 	
 	
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
@@ -25,7 +25,8 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	}
 	
 	override func viewDidLoad() {
-		
+		collectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
+		setUpCollectionView()
 		 
 	}
 	
@@ -34,14 +35,14 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	
 	private func setUpCollectionView() {
 	  let request = NSFetchRequest(entityName: "Photo")
-		let pin = selectedpin
+		let pin = selectedPin
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [pin])
+		request.sortDescriptors = [NSSortDescriptor(key: "photoImage", ascending: true)]
 		request.predicate = pred
 		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContexts.mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
 		guard let cv = collectionView else { fatalError("must have collection view") }
 		dataSource = CollectionViewDataSource(collectionView: cv, dataProvider: dataProvider, delegate: self)
-		
 	}
 }
 
@@ -56,5 +57,10 @@ extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		dataSource.processUpdates(updates)
 	}
-}
 	
+	func callBackSelectedPin() -> Pin {
+		return selectedPin
+	}
+}
+
+
