@@ -24,6 +24,14 @@ public final class Pin: ManagedObject {
 		obj.longitude = long
 		context.save()
 	}
+	
+	public static func constructFindPinPredicate(lat: Double, long: Double) -> NSCompoundPredicate {
+		let pred1 = NSPredicate(format: "%K == %la", "latitude", lat)
+		print(pred1)
+		let pred2 = NSPredicate(format: "%K == %la", "longitude", long)
+		print(pred2)
+		return NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
+	}
 }
 
 extension Pin: ManagedObjectType {

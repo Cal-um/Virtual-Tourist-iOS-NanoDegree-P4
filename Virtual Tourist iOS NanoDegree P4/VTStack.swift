@@ -69,6 +69,7 @@ extension CoreDataStack {
 				self.persistingContext.performBlock() {
 					do {
 						try self.persistingContext.save()
+						print("###BACKGROUND SAVE COMPLETE")
 					} catch {
 						fatalError("Error while saving persistingContext \(error)")
 					}
@@ -93,5 +94,9 @@ extension NSManagedObjectContext {
 		guard let obj = NSEntityDescription.insertNewObjectForEntityForName(A.entityName, inManagedObjectContext: self) as? A else { fatalError("Wrong object type") }
 		return obj
 	}
+	
+
 }
+
+
 

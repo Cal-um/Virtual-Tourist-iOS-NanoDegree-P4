@@ -83,7 +83,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		
 		let annotation = MKPointAnnotation()
 		annotation.coordinate = touchMapCoord
-		
+		print(annotation.coordinate)
 		mapView.addAnnotation(annotation)
 	}
 	
@@ -122,10 +122,24 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	}
 	
 	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+		
+		
+		if newState == MKAnnotationViewDragState.Starting {
+			if let delete = view.annotation?.coordinate {
+				shortTapOnPin = false
+				managedObjectContexts.mainContext.deleteObject(findPinInContextfrom(delete)!)
+			}
+		}
+		
+		if newState == MKAnnotationViewDragState.Ending {
+			if let add = view.annotation {
+				Pin.insertPinIntoContext(add, context: managedObjectContexts)
+				print("moved pin")
+			}
+			shortTapOnPin = true
+		}
+		
 		if newState != MKAnnotationViewDragState.Ending {
-			// TODO: this is where to delete the old pin from core data and save the new one.
-			let droppedAt = view.annotation?.coordinate
-			print(droppedAt)
 			shortTapOnPin = false
 		}
 	}
@@ -133,8 +147,9 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
 		if shortTapOnPin == true {
 			print("didSelectAnnotationView state of shortTapOnPin = \(shortTapOnPin)")
-			//selectedPinForSegue = getWhichPinWasTappedFromContext()
-			
+			if let coord = view.annotation {
+			selectedpin = findPinInContextfrom(coord.coordinate)
+			}
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
 		}
 	}
@@ -145,5 +160,9 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 				Pin.insertPinIntoContext(pin, context: managedObjectContexts)
 			}
 		}
+	}
+	
+	func findPinInContextfrom(coord: CLLocationCoordinate2D) -> Pin? {
+		 return Pin.findOrFetchInContext(managedObjectContexts.mainContext, matchingPredicate: Pin.constructFindPinPredicate(coord.latitude, long: coord.longitude))
 	}
 }
