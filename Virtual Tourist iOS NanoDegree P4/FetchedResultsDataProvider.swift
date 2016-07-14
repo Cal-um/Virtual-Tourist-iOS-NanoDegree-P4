@@ -20,6 +20,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 		self.managedObjectContexts = delegate.managedObjectContexts
 		super.init()
 		try! fetchedResultsController.performFetch()
+		self.fetchedResultsController.delegate = self
 	}
 		
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object {
@@ -32,20 +33,18 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 			switch sec {
 			case 0:
 				let backgroundPin = self.findPinInContextfrom(selectedPin)
-				print("0")
-				managedObjectContexts.performBackgroundSave { _ in
 					print("1")
-					self.getJSONAndParseURLs(self.selectedPin) { result in
+					getJSONAndParseURLs(self.selectedPin) { result in
 						print("2")
 						print(result)
 						self.downloadPhoto(result!) { images in
 							print("3")
 							self.sendToBackgroundContext(images, backgroundPin: backgroundPin) { complete in
 								print(complete)
+								self.managedObjectContexts.performBackgroundSave()
 							}
 						}
 					}
-				}
 				return 0
 			default:
 				return sec
@@ -57,11 +56,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	
 	// MARK: Private
 	
-	private var fetchedResultsController: NSFetchedResultsController {
-		didSet {
-			fetchedResultsController.delegate = self
-		}
-	}
+	private var fetchedResultsController: NSFetchedResultsController
 	private weak var delegate: Delegate!
 	private var updates: [DataProviderUpdate<Object>] = []
 	var selectedPin: Pin!
@@ -76,7 +71,6 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
 		switch type {
 		case .Insert:
-			print("inserted")
 			guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
 			updates.append(.Insert(indexPath))
 		case .Update:

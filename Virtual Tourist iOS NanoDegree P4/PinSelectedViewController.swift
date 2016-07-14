@@ -49,18 +49,29 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 extension PinSelectedViewController: DataSourceDelegate {
 		
 	func cellIdentifierForObject(object: Photo) -> String {
-		return "photoCell"
+		return "PhotoCell"
 	}
 }
 
 extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		dataSource.processUpdates(updates)
+		lkk()
 	}
 	
 	func callBackSelectedPin() -> Pin {
 		return selectedPin
 	}
+	
+	func lkk(){
+		
+		let num = collectionView.numberOfItemsInSection(1)
+		print("/(num) IN SECTION")
+	}
+	
+	
 }
+
+
 
 

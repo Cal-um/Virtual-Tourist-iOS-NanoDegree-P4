@@ -27,6 +27,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 			for update in updates {
 				switch update {
 				case .Insert(let indexPath):
+					print("inserted")
 					self.collectionView.insertItemsAtIndexPaths([indexPath])
 				case .Update(let indexPath, let object):
 					guard let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as? Cell else { fatalError("wrong cell type") }
