@@ -11,3 +11,4 @@ import Foundation
 protocol SelectedPinSettable {
 	var selectedPin: Pin! { get set }
 }
+

@@ -16,6 +16,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
 
 extension PhotoCollectionViewCell: ConfigurableCell {
 	func configureCell(photoObject: Photo) {
-		imageView.image = photoObject.photoImage
+		imageView.image = UIImage(data: photoObject.photoImage)
 	}
 }

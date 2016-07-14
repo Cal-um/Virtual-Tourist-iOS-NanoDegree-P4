@@ -18,6 +18,7 @@ protocol DataProviderDelegate: class {
 	associatedtype Object
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]?)
 	func callBackSelectedPin() -> Pin
+	var managedObjectContexts: CoreDataStack! { get set }
 }
 
 enum DataProviderUpdate<Object> {

@@ -14,7 +14,7 @@ struct CoreDataStack {
 	
 	let mainContext: NSManagedObjectContext
 	private let persistingContext: NSManagedObjectContext
-	private let backgroundContext: NSManagedObjectContext
+	let backgroundContext: NSManagedObjectContext
 	
 	
 	private let StoreURL = NSURL.documentsURL.URLByAppendingPathComponent("VTDB.virtualTourist")
@@ -42,15 +42,19 @@ struct CoreDataStack {
 extension CoreDataStack {
 	
 	// This save will push the network data to the main context.
+
+	
 	func performBackgroundSave() {
+		
 		backgroundContext.performBlock() {
-			
 			do {
 				try self.backgroundContext.save()
+				print("success")
 				} catch {
 					fatalError("Error while saving background context \(error)")
 				}
 		}
+		save()
 	}
 	
 	// This save pushes the changes from the main context to the persisting context. From there it saves in the background.

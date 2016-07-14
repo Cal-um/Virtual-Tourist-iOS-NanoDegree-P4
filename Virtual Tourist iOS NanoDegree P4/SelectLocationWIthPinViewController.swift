@@ -61,7 +61,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 			}
 			guard let pin = selectedpin else { fatalError("No pin was selected") }
 			vc.managedObjectContexts = managedObjectContexts
-			vc.selectedpin = pin
+			vc.selectedPin = pin
 		}
 	}
 	
@@ -163,6 +163,6 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	}
 	
 	func findPinInContextfrom(coord: CLLocationCoordinate2D) -> Pin? {
-		 return Pin.findOrFetchInContext(managedObjectContexts.mainContext, matchingPredicate: Pin.constructFindPinPredicate(coord.latitude, long: coord.longitude))
+		return Pin.findOrFetchInContext(managedObjectContexts.mainContext, matchingPredicate: Pin.constructFindPinPredicate(coord.latitude, long: coord.longitude))
 	}
 }
