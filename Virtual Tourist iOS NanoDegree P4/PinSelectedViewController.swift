@@ -56,20 +56,11 @@ extension PinSelectedViewController: DataSourceDelegate {
 extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		dataSource.processUpdates(updates)
-		lkk()
 	}
 	
 	func callBackSelectedPin() -> Pin {
 		return selectedPin
 	}
-	
-	func lkk(){
-		
-		let num = collectionView.numberOfItemsInSection(1)
-		print("/(num) IN SECTION")
-	}
-	
-	
 }
 
 
