@@ -20,7 +20,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 		self.managedObjectContexts = delegate.managedObjectContexts
 		super.init()
 		try! fetchedResultsController.performFetch()
-		//self.fetchedResultsController.delegate = self
+		self.fetchedResultsController.delegate = self
 	}
 		
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object {
