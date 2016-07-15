@@ -29,19 +29,18 @@ extension ManagedObjectType where Self: ManagedObject  {
 	}
 
 	static public func findInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate) -> Self? {
-		
 		for obj in moc.registeredObjects where !obj.fault {
 			print("checking")
 			print(obj)
 			guard let res = obj as? Self where predicate.evaluateWithObject(res) else { continue }
 			print(res)
 			return res
-			
-		}
-		print("shit")
+			}
 		return nil
-		
-	}
+		}
+
+
+	
 	
 	public static func fetchInContext(context: NSManagedObjectContext, @noescape configurationBlock: NSFetchRequest -> () = { _ in }) -> [Self] {
 		let request = NSFetchRequest(entityName: Self.entityName)

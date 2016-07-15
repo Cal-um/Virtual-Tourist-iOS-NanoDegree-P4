@@ -34,13 +34,13 @@ class SelectLocationWithPinViewControllerTests: XCTestCase {
 	}
 
 	
-	func testThatMOCCanBePassedToMOCProperty() {
-		// Given in setUp()
-		// When
-		sut.managedObjectContext = managedObjectContext
-		// Then
-		XCTAssertNotNil(sut.managedObjectContext)
-	}
+//	func testThatMOCCanBePassedToMOCProperty() {
+//		// Given in setUp()
+//		// When
+//		sut.managedObjectContext = managedObjectContext
+//		// Then
+//		XCTAssertNotNil(sut.managedObjectContext)
+//	}
 	
 	func testThatMapViewNotNilAfterViewDidLoad() {
 		// Given in setUp()

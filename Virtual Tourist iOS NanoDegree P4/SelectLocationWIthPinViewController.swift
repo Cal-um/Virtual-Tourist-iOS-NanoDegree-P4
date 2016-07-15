@@ -127,7 +127,7 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 		if newState == MKAnnotationViewDragState.Starting {
 			if let delete = view.annotation?.coordinate {
 				shortTapOnPin = false
-				managedObjectContexts.mainContext.deleteObject(findPinInContextfrom(delete)!)
+				self.managedObjectContexts.mainContext.deleteObject(findPinInContextfrom(delete)!)
 			}
 		}
 		
@@ -148,7 +148,7 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 		if shortTapOnPin == true {
 			print("didSelectAnnotationView state of shortTapOnPin = \(shortTapOnPin)")
 			if let coord = view.annotation {
-			selectedpin = findPinInContextfrom(coord.coordinate)
+					selectedpin = findPinInContextfrom(coord.coordinate)
 			}
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
 		}

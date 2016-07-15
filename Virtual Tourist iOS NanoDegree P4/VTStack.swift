@@ -43,18 +43,21 @@ extension CoreDataStack {
 	
 	// This save will push the network data to the main context.
 
+	typealias Batch = () -> ()
 	
-	func performBackgroundSave() {
+	func performBackgroundSave(batch: Batch) {
 		
 		backgroundContext.performBlock() {
+		
 			do {
 				try self.backgroundContext.save()
 				print("success")
 				} catch {
 					fatalError("Error while saving background context \(error)")
 				}
+			}
 		}
-	}
+	
 	
 
 	

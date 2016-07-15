@@ -20,7 +20,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 		self.managedObjectContexts = delegate.managedObjectContexts
 		super.init()
 		try! fetchedResultsController.performFetch()
-		self.fetchedResultsController.delegate = self
+		//self.fetchedResultsController.delegate = self
 	}
 		
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object {
@@ -30,25 +30,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	
 	func numberOfItemsInSection(section: Int) -> Int {
 		if let sec = fetchedResultsController.sections?[section].numberOfObjects {
-			switch sec {
-			case 0:
-				let backgroundPin = self.findPinInContextfrom(selectedPin)
-					print("1")
-					getJSONAndParseURLs(self.selectedPin) { result in
-						print("2")
-						print(result)
-						self.downloadPhoto(result!) { images in
-							print("3")
-							self.sendToBackgroundContext(images, backgroundPin: backgroundPin) { complete in
-								print(complete)
-								self.managedObjectContexts.performBackgroundSave()
-							}
-						}
-					}
-				return 0
-			default:
-				return sec
-			}
+		return sec
 		} else {
 			return 0
 		}
@@ -89,57 +71,5 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	
 	func controllerDidChangeContent(controller: NSFetchedResultsController) {
 		delegate.dataProviderDidUpdate(updates)
-	}
-	
-	// Networking Code
-	
-	func getJSONAndParseURLs(pin: Pin, completion: [NSURL]? -> ()) {
-		
-		let parseAll = Resource<[NSURL]>(url: FlickrConvenience.buildURL(pin), parseJSON: { jsonData in
-			guard let json = jsonData as? JSONDictionary, photos = json["photos"] as? JSONDictionary, photo = photos["photo"] as? [JSONDictionary] else { return nil }
-			return photo.flatMap(Photo.parseURLs)
-		})
-		WebService().load(parseAll) { result in
-			completion(result)
-		}
-	}
-	
-	func downloadPhoto(urls: [NSURL], completion: [NSData] -> ()) {
-
-		let urlsForDownload = Photo.randomiseURLs(urls)
-		
-		var images = [NSData]()
-		var counter = 0
-		for url in urlsForDownload {
-			let getImage = Resource<NSData>(url: url, parse: { data in
-				return data
-			})
-			WebService().load(getImage) { result in
-				counter += 1
-				if let image = result {
-				print("image downloaded")
-				images.append(image)
-				if counter == urlsForDownload.count {
-						completion(images)
-					}
-				}
-			}
-		}
-		
-	}
-	
-	func findPinInContextfrom(pin: Pin) -> Pin {
-		return Pin.findOrFetchInContext(managedObjectContexts.backgroundContext, matchingPredicate: Pin.constructFindPinPredicate(pin.latitude, long: pin.longitude))!
-	}
-	
-	func sendToBackgroundContext(images:[NSData], backgroundPin: Pin, completion: Bool -> ()) {
-
-		for image in images {
-			print("save")
-			let obj: Photo = self.managedObjectContexts.backgroundContext.insertObject()
-			obj.photoImage = image
-			obj.owner = backgroundPin
-		}
-		completion(true)
 	}
 }
