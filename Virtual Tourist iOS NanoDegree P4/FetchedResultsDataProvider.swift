@@ -16,11 +16,10 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	init(fetchedResultsController: NSFetchedResultsController, delegate: Delegate) {
 		self.fetchedResultsController = fetchedResultsController
 		self.delegate = delegate
-		self.selectedPin = delegate.callBackSelectedPin()
-		self.managedObjectContexts = delegate.managedObjectContexts
 		super.init()
+		fetchedResultsController.delegate = self
 		try! fetchedResultsController.performFetch()
-		self.fetchedResultsController.delegate = self
+		
 	}
 		
 	func objectAtIndexPath(indexPath: NSIndexPath) -> Object {
@@ -29,11 +28,8 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	}
 	
 	func numberOfItemsInSection(section: Int) -> Int {
-		if let sec = fetchedResultsController.sections?[section].numberOfObjects {
-		return sec
-		} else {
-			return 0
-		}
+		guard let sec = fetchedResultsController.sections?[section] else { return 0 }
+		return sec.numberOfObjects
 	}
 	
 	// MARK: Private
@@ -42,15 +38,16 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	private weak var delegate: Delegate!
 	private var updates: [DataProviderUpdate<Object>] = []
 	var selectedPin: Pin!
-	var managedObjectContexts: CoreDataStack!
 	
 	// MARK: NSFetchedResultsControllerDelegate
 	
 	func controllerWillChangeContent(controller: NSFetchedResultsController) {
+		print("hi")
 		updates = []
 	}
 	
 	func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+		print(123)
 		switch type {
 		case .Insert:
 			guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
@@ -71,5 +68,6 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	
 	func controllerDidChangeContent(controller: NSFetchedResultsController) {
 		delegate.dataProviderDidUpdate(updates)
+		print("changed")
 	}
 }

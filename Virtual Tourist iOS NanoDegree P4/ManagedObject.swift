@@ -17,7 +17,7 @@ public protocol ManagedObjectType: class {
 
 extension ManagedObjectType where Self: ManagedObject  {
 	
-	static public func findOrFetchInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate) -> Self? {
+	static public func findOrFetchSingleInstanceInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate) -> Self? {
 		guard let obj = findInContext(moc, matchingPredicate: predicate) else {
 			return fetchInContext(moc) { request in
 				request.predicate = predicate
@@ -29,6 +29,7 @@ extension ManagedObjectType where Self: ManagedObject  {
 	}
 
 	static public func findInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate) -> Self? {
+
 		for obj in moc.registeredObjects where !obj.fault {
 			print("checking")
 			print(obj)
@@ -39,9 +40,6 @@ extension ManagedObjectType where Self: ManagedObject  {
 		return nil
 		}
 
-
-	
-	
 	public static func fetchInContext(context: NSManagedObjectContext, @noescape configurationBlock: NSFetchRequest -> () = { _ in }) -> [Self] {
 		let request = NSFetchRequest(entityName: Self.entityName)
 		configurationBlock(request)

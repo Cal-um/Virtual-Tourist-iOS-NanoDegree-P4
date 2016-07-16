@@ -9,5 +9,5 @@
 import CoreData
 
 protocol ManagedObjectContextSettable: class {
-	var managedObjectContexts: CoreDataStack! { get set }
+	var downloadSyncAndMOC: DownloadSync! { get set }
 }

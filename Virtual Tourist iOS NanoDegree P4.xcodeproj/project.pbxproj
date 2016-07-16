@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A1430D11D3993F9009FB7B4 /* DownloadSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1430D01D3993F9009FB7B4 /* DownloadSync.swift */; };
 		3A18F2121CEDA5D7003141B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */; };
 		3A18F2171CEDA5D7003141B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2151CEDA5D7003141B9 /* Main.storyboard */; };
 		3A18F2191CEDA5D7003141B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A18F2181CEDA5D7003141B9 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A1430D01D3993F9009FB7B4 /* DownloadSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadSync.swift; sourceTree = "<group>"; };
 		3A18F20E1CEDA5D7003141B9 /* Virtual Tourist iOS NanoDegree P4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist iOS NanoDegree P4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A18F2111CEDA5D7003141B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A18F2161CEDA5D7003141B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				3AF28E801D13F3F600CA522B /* VT.xcdatamodeld */,
 				3AF28E861D14003400CA522B /* VTStack.swift */,
+				3A1430D01D3993F9009FB7B4 /* DownloadSync.swift */,
 				3AF28E881D1400B300CA522B /* Model */,
 				3AF28E911D140E2200CA522B /* CoreDataHelpers */,
 			);
@@ -421,6 +424,7 @@
 				3A203F1A1D2D3A5000216547 /* DataProvider.swift in Sources */,
 				3AF28E961D1413AB00CA522B /* ManagedObjectContextSettable.swift in Sources */,
 				3AF28E821D13F3F600CA522B /* VT.xcdatamodeld in Sources */,
+				3A1430D11D3993F9009FB7B4 /* DownloadSync.swift in Sources */,
 				3A203F141D2C45D700216547 /* CollectionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,7 +13,7 @@ import CoreData
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
 	
 	var shortTapOnPin: Bool = false
-	var managedObjectContexts: CoreDataStack!
+	var downloadSyncAndMOC: DownloadSync!
 	var selectedpin: Pin?
 	var fetchedPins = [Pin]?()
 	var annotations = [MKPointAnnotation]()
@@ -23,7 +23,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	override func viewDidLoad() {
 	
 		loadMapViewLastRegion()
-		fetchedPins = managedObjectContexts.fetchPins().map { pins in return pins as! [Pin] }
+		fetchedPins = downloadSyncAndMOC.mainManagedObjectContext.fetchPins().map { pins in return pins as! [Pin] }
 		if let pins = fetchedPins {
 			for i in pins {
 				let pin = convertPinToMKPointAnnotation(i)
@@ -60,7 +60,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 				fatalError("Wrong view controller type")
 			}
 			guard let pin = selectedpin else { fatalError("No pin was selected") }
-			vc.managedObjectContexts = managedObjectContexts
+			vc.downloadSyncAndMOC = downloadSyncAndMOC
 			vc.selectedPin = pin
 		}
 	}
@@ -127,13 +127,14 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 		if newState == MKAnnotationViewDragState.Starting {
 			if let delete = view.annotation?.coordinate {
 				shortTapOnPin = false
-				self.managedObjectContexts.mainContext.deleteObject(findPinInContextfrom(delete)!)
+				downloadSyncAndMOC.mainManagedObjectContext.deleteObject(findPinInContextfrom(delete)!)
 			}
 		}
 		
 		if newState == MKAnnotationViewDragState.Ending {
 			if let add = view.annotation {
-				Pin.insertPinIntoContext(add, context: managedObjectContexts)
+				Pin.insertPinIntoContext(add, context: downloadSyncAndMOC.mainManagedObjectContext)
+				downloadSyncAndMOC.mainManagedObjectContext.trySave()
 				print("moved pin")
 			}
 			shortTapOnPin = true
@@ -157,12 +158,12 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
 		if views.count == 1 {
 			if let view = views.first, pin = view.annotation {
-				Pin.insertPinIntoContext(pin, context: managedObjectContexts)
+				Pin.insertPinIntoContext(pin, context: downloadSyncAndMOC.mainManagedObjectContext)
 			}
 		}
 	}
 	
 	func findPinInContextfrom(coord: CLLocationCoordinate2D) -> Pin? {
-		return Pin.findOrFetchInContext(managedObjectContexts.mainContext, matchingPredicate: Pin.constructFindPinPredicate(coord.latitude, long: coord.longitude))
+		return Pin.findOrFetchSingleInstanceInContext(downloadSyncAndMOC.mainManagedObjectContext, matchingPredicate: Pin.constructFindPinPredicate(coord.latitude, long: coord.longitude))
 	}
 }

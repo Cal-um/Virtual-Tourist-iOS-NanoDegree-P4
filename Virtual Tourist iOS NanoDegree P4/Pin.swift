@@ -15,14 +15,14 @@ public final class Pin: ManagedObject {
 	@NSManaged public var latitude: Double
 	@NSManaged public private(set) var locationPhotos: Set<Photo>?
 	
-	static func insertPinIntoContext(from: MKAnnotation, context: CoreDataStack)  {
+	static func insertPinIntoContext(from: MKAnnotation, context: NSManagedObjectContext)  {
 		
 		let lat = from.coordinate.latitude
 		let long = from.coordinate.longitude
-		let obj: Pin = context.mainContext.insertObject()
+		let obj: Pin = context.insertObject()
 		obj.latitude = lat
 		obj.longitude = long
-		context.save()
+		context.trySave()
 	}
 	
 	public static func constructFindPinPredicate(lat: Double, long: Double) -> NSCompoundPredicate {

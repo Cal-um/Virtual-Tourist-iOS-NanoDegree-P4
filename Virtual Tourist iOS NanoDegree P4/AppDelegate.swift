@@ -13,12 +13,17 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
   var window: UIWindow?
+	var managedObjectContext: NSManagedObjectContext!
+	var downloadSyncAndMOC: DownloadSync!
+	
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
-		guard let stack = CoreDataStack() else { fatalError() }
+		guard let mainContext = getMainContext() else { fatalError() }
+		managedObjectContext = mainContext
+		downloadSyncAndMOC = DownloadSync(mainManagedObjectContext: mainContext)
 		guard let vc = window?.rootViewController as? ManagedObjectContextSettable else { fatalError("Wrong view controller type") }
-		vc.managedObjectContexts = stack
+		vc.downloadSyncAndMOC = downloadSyncAndMOC
 		return true
   }
 
