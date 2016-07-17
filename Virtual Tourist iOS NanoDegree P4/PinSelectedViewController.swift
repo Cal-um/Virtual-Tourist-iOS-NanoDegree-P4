@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MapKit
 
-class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable, UICollectionViewDelegate {
+class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable {
 	
 	var downloadSyncAndMOC: DownloadSync!
 	var selectedPin: Pin!
@@ -23,7 +23,6 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	
 	@IBAction func newCollectionPressed(sender: AnyObject) {
 		deletePhotosFromContext()
-		
 	}
 	
 	@IBAction func buttonPressed(sender: AnyObject) {
@@ -31,6 +30,7 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	}
 	
 	override func viewDidLoad() {
+		setMapView()
 		collectionView.delegate = self
 		mainContext = downloadSyncAndMOC.mainManagedObjectContext
 		collectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
@@ -53,6 +53,15 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
 		guard let cv = collectionView else { fatalError("must have collection view") }
 		dataSource = CollectionViewDataSource(collectionView: cv, dataProvider: dataProvider, delegate: self)
+	}
+	
+	private func setMapView() {
+		let span = MKCoordinateSpanMake(0.030, 0.030)
+		let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: selectedPin.latitude, longitude: selectedPin.longitude), span: span)
+		mapView.setRegion(region, animated: true)
+		let annotation = MKPointAnnotation()
+		annotation.coordinate = CLLocationCoordinate2D(latitude: selectedPin.latitude, longitude: selectedPin.longitude)
+		mapView.addAnnotation(annotation)
 	}
 	
 	private func deletePhotosFromContext() {
@@ -81,7 +90,16 @@ extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		print("updates")
 		dataSource.processUpdates(updates)
+		
 	}
 }
 
+extension PinSelectedViewController: UICollectionViewDelegate {
+	
+	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+		mainContext.deleteObject(dataSource.selectedObjectAtIndexPath(indexPath))
+	}
+	
+	
+}
 

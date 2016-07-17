@@ -24,6 +24,10 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 		guard let indexPath = collectionView.indexPathsForSelectedItems()?.first else { return nil }
 		return dataProvider.objectAtIndexPath(indexPath)
 	}
+	
+	func selectedObjectAtIndexPath(indexPath: NSIndexPath) -> Delegate.Object {
+		return dataProvider.objectAtIndexPath(indexPath)
+	}
 
 	func processUpdates(updates: [DataProviderUpdate<Data.Object>]?) {
 		guard let updates = updates else { return collectionView.reloadData() }
