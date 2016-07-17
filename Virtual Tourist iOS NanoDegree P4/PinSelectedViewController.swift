@@ -10,48 +10,35 @@ import UIKit
 import CoreData
 import MapKit
 
-class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable {
+class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable, UICollectionViewDelegate {
 	
-	var managedObjectContexts: CoreDataStack!
+	var downloadSyncAndMOC: DownloadSync!
 	var selectedPin: Pin!
+	var mainContext: NSManagedObjectContext! 
 	
 	
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var mapView: MKMapView!
 	
+	@IBAction func newCollectionPressed(sender: AnyObject) {
+		deletePhotosFromContext()
+		
+	}
+	
 	@IBAction func buttonPressed(sender: AnyObject) {
 		dismissViewControllerAnimated(true, completion: nil)
 	}
 	
 	override func viewDidLoad() {
+		collectionView.delegate = self
+		mainContext = downloadSyncAndMOC.mainManagedObjectContext
 		collectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
 		setUpCollectionView()
-		// load pin into background context
-		let backgroundPin = findPinInContextfrom(selectedPin)
-		// if the collection view is empty, download images.
 		if collectionView.numberOfItemsInSection(0) == 0 {
-			managedObjectContexts.backgroundContext.performBlock {
-				print("1")
-				self.getJSONAndParseURLs(self.selectedPin) { result in
-					print("2")
-					print(result)
-					self.downloadPhoto(result!) { images in
-						print("3")
-						self.sendToBackgroundContext(images, backgroundPin: backgroundPin) { complete in
-							print(complete)
-							do {
-								try self.managedObjectContexts.backgroundContext.save()
-								print("success")
-								} catch {
-								fatalError("Error while saving background context \(error)")
-								}
-							}
-						}
-					}
-				}
-			}
+			downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude)
 		}
+	}
 	
 	private typealias PhotosDataProvider = FetchedResultsDataProvider<PinSelectedViewController>
 	private var dataSource: CollectionViewDataSource<PinSelectedViewController, PhotosDataProvider, PhotoCollectionViewCell>!
@@ -62,10 +49,25 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [pin])
 		request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
 		request.predicate = pred
-		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContexts.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
 		guard let cv = collectionView else { fatalError("must have collection view") }
 		dataSource = CollectionViewDataSource(collectionView: cv, dataProvider: dataProvider, delegate: self)
+	}
+	
+	private func deletePhotosFromContext() {
+		
+		let numberOfPhotosInCollectionView = collectionView.numberOfItemsInSection(0)
+		let pred = NSPredicate(format: "owner = %@", argumentArray: [selectedPin])
+		let comp = NSCompoundPredicate(andPredicateWithSubpredicates: [pred])
+		let photosInAlbum = Photo.findAllInContext(mainContext, matchingPredicate: comp, numberInAlbum: numberOfPhotosInCollectionView)
+		print(photosInAlbum?.count)
+	//	guard numberOfPhotosInCollectionView == photosInAlbum!.count else { fatalError("Photos were not in context") }
+		for delete in photosInAlbum! {
+			mainContext.deleteObject(delete)
+		}
+		mainContext.trySave()
+		downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude)
 	}
 }
 
@@ -78,56 +80,14 @@ extension PinSelectedViewController: DataSourceDelegate {
 
 extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
+		print("updates")
 		dataSource.processUpdates(updates)
 	}
 	
-	func callBackSelectedPin() -> Pin {
-		return selectedPin
-	}
+	
 }
 
 
-extension PinSelectedViewController {
-
-	// Networking Code
-
-	func getJSONAndParseURLs(pin: Pin, completion: [NSURL]? -> ()) {
-		
-		let parseAll = Resource<[NSURL]>(url: FlickrConvenience.buildURL(pin), parseJSON: { jsonData in
-			guard let json = jsonData as? JSONDictionary, photos = json["photos"] as? JSONDictionary, photo = photos["photo"] as? [JSONDictionary] else { return nil }
-			return photo.flatMap(Photo.parseURLs)
-		})
-		WebService().load(parseAll) { result in
-			completion(result)
-		}
-	}
-
-	func downloadPhoto(urls: [NSURL], completion: [NSData] -> ()) {
-		
-		let urlsForDownload = Photo.randomiseURLs(urls)
-		
-		var images = [NSData]()
-		var counter = 0
-		for url in urlsForDownload {
-			let getImage = Resource<NSData>(url: url, parse: { data in
-				return data
-			})
-			WebService().load(getImage) { result in
-				counter += 1
-				if let image = result {
-					print("image downloaded")
-					images.append(image)
-					if counter == urlsForDownload.count {
-						completion(images)
-					}
-				}
-			}
-		}
-	}
-	
-	func findPinInContextfrom(pin: Pin) -> Pin {
-		return Pin.findOrFetchInContext(managedObjectContexts.backgroundContext, matchingPredicate: Pin.constructFindPinPredicate(pin.latitude, long: pin.longitude))!
-	}
 
 	func sendToBackgroundContext(images:[NSData], backgroundPin: Pin, completion: Bool -> ()) {
 		
