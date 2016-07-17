@@ -9,7 +9,7 @@
 import CoreData
 import UIKit
 
-class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, DataProvider, NSFetchedResultsControllerDelegate, SelectedPinSettable {
+class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, DataProvider, NSFetchedResultsControllerDelegate {
 	
 	typealias Object = Delegate.Object
 	
@@ -37,7 +37,6 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, Data
 	private var fetchedResultsController: NSFetchedResultsController
 	private weak var delegate: Delegate!
 	private var updates: [DataProviderUpdate<Object>] = []
-	var selectedPin: Pin!
 	
 	// MARK: NSFetchedResultsControllerDelegate
 	

@@ -19,8 +19,12 @@ import CoreData
 		try! psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
 		let moc = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
 		moc.persistentStoreCoordinator = psc
+		moc.mergePolicy = NSMergePolicy(mergeType: .MergeByPropertyStoreTrumpMergePolicyType)
 		return moc
 	}
+
+
+
 
 	
 extension NSManagedObjectContext {
@@ -34,6 +38,7 @@ extension NSManagedObjectContext {
 	public func createBackgroundContext() -> NSManagedObjectContext {
 		let context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
 		context.persistentStoreCoordinator = persistentStoreCoordinator
+		context.mergePolicy = NSMergePolicy(mergeType: .MergeByPropertyStoreTrumpMergePolicyType)
 		return context
 	}
 	

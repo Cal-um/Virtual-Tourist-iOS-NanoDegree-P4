@@ -14,11 +14,7 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	
 	var downloadSyncAndMOC: DownloadSync!
 	var selectedPin: Pin!
-	var mainContext: NSManagedObjectContext! {
-		didSet {
-			collectionView.reloadData()
-		}
-	}
+	var mainContext: NSManagedObjectContext! 
 	
 	
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
@@ -27,6 +23,7 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	
 	@IBAction func newCollectionPressed(sender: AnyObject) {
 		deletePhotosFromContext()
+		
 	}
 	
 	@IBAction func buttonPressed(sender: AnyObject) {
@@ -49,9 +46,9 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	private func setUpCollectionView() {
 	  let request = NSFetchRequest(entityName: "Photo")
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [selectedPin])
-		request.sortDescriptors = [NSSortDescriptor(key: "photoImage", ascending: true)]
+		request.sortDescriptors = [NSSortDescriptor(key: "dateOfDownload", ascending: true)]
 		request.predicate = pred
-		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: downloadSyncAndMOC.mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
 		guard let cv = collectionView else { fatalError("must have collection view") }
 		dataSource = CollectionViewDataSource(collectionView: cv, dataProvider: dataProvider, delegate: self)
@@ -59,14 +56,18 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	
 	private func deletePhotosFromContext() {
 		
-		let request = NSFetchRequest(entityName: "Photo")
+		let numberOfPhotosInCollectionView = collectionView.numberOfItemsInSection(0)
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [selectedPin])
-		request.predicate = pred
-		let batchDelete = NSBatchDeleteRequest(fetchRequest: request)
-		try! downloadSyncAndMOC.mainManagedObjectContext.executeRequest(batchDelete)
-		downloadSyncAndMOC.mainManagedObjectContext.trySave()
+		let comp = NSCompoundPredicate(andPredicateWithSubpredicates: [pred])
+		let photosInAlbum = Photo.findAllInContext(mainContext, matchingPredicate: comp, numberInAlbum: numberOfPhotosInCollectionView)
+		print(photosInAlbum?.count)
+	//	guard numberOfPhotosInCollectionView == photosInAlbum!.count else { fatalError("Photos were not in context") }
+		for delete in photosInAlbum! {
+			mainContext.deleteObject(delete)
+		}
+		mainContext.trySave()
+		downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude)
 	}
-	
 }
 
 extension PinSelectedViewController: DataSourceDelegate {
@@ -82,9 +83,7 @@ extension PinSelectedViewController: DataProviderDelegate {
 		dataSource.processUpdates(updates)
 	}
 	
-	func callBackSelectedPin() -> Pin {
-		return selectedPin
-	}
+	
 }
 
 

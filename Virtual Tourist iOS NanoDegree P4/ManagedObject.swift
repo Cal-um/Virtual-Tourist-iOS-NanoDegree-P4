@@ -27,7 +27,23 @@ extension ManagedObjectType where Self: ManagedObject  {
 		}
 		return obj
 	}
-
+	
+	static public func findAllInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate, numberInAlbum: Int) -> [Self]? {
+		var holder = [Self]()
+		for _ in 1...numberInAlbum {
+			for obj in moc.registeredObjects where !obj.fault {
+				print("checking")
+				print(obj)
+				guard let res = obj as? Self where predicate.evaluateWithObject(res) && holder.contains(res) == false else		{ continue }
+				print(res)
+				holder.append(res)
+			}
+		}
+		print("£££££££££££££££££££find complete")
+		print("££££££££££££££££££££\(holder)")
+		return holder
+	}
+	
 	static public func findInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSCompoundPredicate) -> Self? {
 
 		for obj in moc.registeredObjects where !obj.fault {

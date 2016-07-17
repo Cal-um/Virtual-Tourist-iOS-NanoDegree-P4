@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider, Cell: UICollectionViewCell where Delegate.Object == Data.Object, Cell: ConfigurableCell, Cell.DataSource == Data.Object>: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider, Cell: UICollectionViewCell where Delegate.Object == Data.Object, Cell: ConfigurableCell, Cell.DataSource == Data.Object>: NSObject, UICollectionViewDataSource {
 	
 	required init(collectionView: UICollectionView, dataProvider: Data, delegate: Delegate) {
 		self.collectionView = collectionView
@@ -16,11 +16,15 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 		self.delegate = delegate
 		super.init()
 		collectionView.dataSource = self
-		collectionView.delegate = self
 		collectionView.reloadData()
 		
 	}
 	
+	var selectedObject: Data.Object? {
+		guard let indexPath = collectionView.indexPathsForSelectedItems()?.first else { return nil }
+		return dataProvider.objectAtIndexPath(indexPath)
+	}
+
 	func processUpdates(updates: [DataProviderUpdate<Data.Object>]?) {
 		guard let updates = updates else { return collectionView.reloadData() }
 		collectionView.performBatchUpdates({
@@ -51,6 +55,7 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 	// MARK: CollectionViewDataSource
 	
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		print(dataProvider.numberOfItemsInSection(section))
 		return dataProvider.numberOfItemsInSection(section)
 	}
 	

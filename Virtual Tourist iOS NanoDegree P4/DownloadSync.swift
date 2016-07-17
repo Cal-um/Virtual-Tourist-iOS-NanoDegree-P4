@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-struct DownloadSync {
+class DownloadSync {
 	
 	let mainManagedObjectContext: NSManagedObjectContext!
 	let syncManagedObjectContext: NSManagedObjectContext!
@@ -17,6 +17,7 @@ struct DownloadSync {
 	init(mainManagedObjectContext mainMOC: NSManagedObjectContext) {
 		self.mainManagedObjectContext = mainMOC
 		self.syncManagedObjectContext = mainManagedObjectContext.createBackgroundContext()
+		setUpNotificationForPrivateContext()
 		
 	}
 	
@@ -37,6 +38,13 @@ struct DownloadSync {
 					}
 				}
 			}
+		}
+	}
+	
+	private func setUpNotificationForPrivateContext() {
+		let notificationCentre = NSNotificationCenter.defaultCenter()
+		notificationCentre.addObserverForName(NSManagedObjectContextDidSaveNotification, object: syncManagedObjectContext, queue: nil) { notification in
+			self.mainManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
 		}
 	}
 }
@@ -90,6 +98,7 @@ extension DownloadSync {
 			let obj: Photo = syncManagedObjectContext.insertObject()
 			obj.photoImage = image
 			obj.owner = backgroundPin
+			obj.dateOfDownload = NSDate()
 		}
 		completion(true)
 	}

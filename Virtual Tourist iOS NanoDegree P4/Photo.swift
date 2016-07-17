@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 public final class Photo: ManagedObject {
+	@NSManaged public var dateOfDownload: NSDate
 	@NSManaged public var photoImage: NSData
 	@NSManaged public var owner: Pin
 }
