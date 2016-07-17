@@ -47,7 +47,7 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	  let request = NSFetchRequest(entityName: "Photo")
 		let pin = selectedPin
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [pin])
-		request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+		request.sortDescriptors = [NSSortDescriptor(key: "dateOfDownload", ascending: true)]
 		request.predicate = pred
 		let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
@@ -62,7 +62,6 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 		let comp = NSCompoundPredicate(andPredicateWithSubpredicates: [pred])
 		let photosInAlbum = Photo.findAllInContext(mainContext, matchingPredicate: comp, numberInAlbum: numberOfPhotosInCollectionView)
 		print(photosInAlbum?.count)
-	//	guard numberOfPhotosInCollectionView == photosInAlbum!.count else { fatalError("Photos were not in context") }
 		for delete in photosInAlbum! {
 			mainContext.deleteObject(delete)
 		}
@@ -83,22 +82,6 @@ extension PinSelectedViewController: DataProviderDelegate {
 		print("updates")
 		dataSource.processUpdates(updates)
 	}
-	
-	
 }
 
-
-
-	func sendToBackgroundContext(images:[NSData], backgroundPin: Pin, completion: Bool -> ()) {
-		
-		for image in images {
-			print("save")
-			let obj: Photo = self.managedObjectContexts.backgroundContext.insertObject()
-			obj.photoImage = image
-			obj.owner = backgroundPin
-			obj.date = NSDate()
-		}
-		completion(true)
-	}
-}
 
