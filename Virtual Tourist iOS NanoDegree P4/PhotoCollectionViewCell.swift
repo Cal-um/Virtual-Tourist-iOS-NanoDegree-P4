@@ -19,13 +19,3 @@ extension PhotoCollectionViewCell: ConfigurableCell {
 	}
 }
 
-class LoadingCollectionViewCell: UICollectionViewCell {
-	
-	@IBOutlet weak var loadingWheel: UIActivityIndicatorView!
-}
-
-extension LoadingCollectionViewCell: ConfigurableCell {
-	func configureCell(photoObject: Photo) {
-		loadingWheel.startAnimating()
-	}
-}

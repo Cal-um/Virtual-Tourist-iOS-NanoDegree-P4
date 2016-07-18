@@ -22,10 +22,6 @@ import CoreData
 		moc.mergePolicy = NSMergePolicy(mergeType: .MergeByPropertyStoreTrumpMergePolicyType)
 		return moc
 	}
-
-
-
-
 	
 extension NSManagedObjectContext {
 	
