@@ -116,9 +116,4 @@ extension PinSelectedViewController: UICollectionViewDelegate {
 	}
 }
 
-public enum ScreenStatus {
-	case Loading
-	case NoPhotosAvailable
-	case Populated
-}
 
