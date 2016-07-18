@@ -20,6 +20,10 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 		
 	}
 	
+	var numberOfItemsInView: Int {
+		return dataProvider.numberOfItemsInSection(0)
+	}
+	
 	var selectedObject: Data.Object? {
 		guard let indexPath = collectionView.indexPathsForSelectedItems()?.first else { return nil }
 		return dataProvider.objectAtIndexPath(indexPath)
@@ -59,7 +63,6 @@ class CollectionViewDataSource<Delegate: DataSourceDelegate, Data: DataProvider,
 	// MARK: CollectionViewDataSource
 	
 	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		print(dataProvider.numberOfItemsInSection(section))
 		return dataProvider.numberOfItemsInSection(section)
 	}
 	

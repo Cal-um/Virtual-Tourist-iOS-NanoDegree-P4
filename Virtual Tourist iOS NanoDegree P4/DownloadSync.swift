@@ -21,8 +21,10 @@ class DownloadSync {
 		
 	}
 	
-	func downloadImagesFromNetwork(latFromPin lat: Double, longFromPin long: Double) {
+	func downloadImagesFromNetwork(latFromPin lat: Double, longFromPin long: Double) -> Int {
 		// load pin into background context
+		var totalImages: Int = 0
+		
 		let backgroundPin = findPinInContextfrom(latFromPin: lat, longFromPin: long)
 		// download images based on coordinates
 		syncManagedObjectContext.performBlock {
@@ -34,11 +36,13 @@ class DownloadSync {
 					print("3")
 					self.sendToBackgroundContext(images, backgroundPin: backgroundPin) { complete in
 						print(complete)
+						totalImages = images.count
 							self.syncManagedObjectContext.trySave()
 					}
 				}
 			}
 		}
+		return totalImages
 	}
 	
 	private func setUpNotificationForPrivateContext() {

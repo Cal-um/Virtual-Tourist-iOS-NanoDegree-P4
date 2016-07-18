@@ -16,16 +16,30 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	var selectedPin: Pin!
 	var mainContext: NSManagedObjectContext! 
 	
+	var itemsInCollectionView: Int! {
+		didSet {
+			if itemsInCollectionView > 0 {
+				animateView.hidden = true
+				loadingWheel.stopAnimating()
+				} else {
+					animateView.hidden = false
+					loadingWheel.startAnimating()
+			}
+		}
+	}
 	
+	@IBOutlet weak var loadingWheel: UIActivityIndicatorView!
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var animateView: UIView!
 	
 	@IBAction func newCollectionPressed(sender: AnyObject) {
 		deletePhotosFromContext()
 	}
 	
 	@IBAction func buttonPressed(sender: AnyObject) {
+		mainContext.trySave()
 		dismissViewControllerAnimated(true, completion: nil)
 	}
 	
@@ -35,8 +49,9 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 		mainContext = downloadSyncAndMOC.mainManagedObjectContext
 		collectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
 		setUpCollectionView()
-		if collectionView.numberOfItemsInSection(0) == 0 {
-			downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude)
+		itemsInCollectionView = collectionView.numberOfItemsInSection(0)
+		if itemsInCollectionView == 0 {
+			print(downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude))
 		}
 	}
 	
@@ -90,7 +105,7 @@ extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		print("updates")
 		dataSource.processUpdates(updates)
-		
+		itemsInCollectionView = collectionView.numberOfItemsInSection(0)
 	}
 }
 
@@ -99,7 +114,11 @@ extension PinSelectedViewController: UICollectionViewDelegate {
 	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 		mainContext.deleteObject(dataSource.selectedObjectAtIndexPath(indexPath))
 	}
-	
-	
+}
+
+public enum ScreenStatus {
+	case Loading
+	case NoPhotosAvailable
+	case Populated
 }
 
