@@ -87,6 +87,9 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yhe-q9-CE0">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2jt-cc-7gj">
+                                                    <rect key="frame" x="40" y="40" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -94,45 +97,31 @@
                                             <constraint firstItem="yhe-q9-CE0" firstAttribute="leading" secondItem="GxA-kV-3mP" secondAttribute="leading" id="6tr-A1-YLx"/>
                                             <constraint firstItem="yhe-q9-CE0" firstAttribute="top" secondItem="GxA-kV-3mP" secondAttribute="top" id="H3s-Aj-SaN"/>
                                             <constraint firstAttribute="trailing" secondItem="yhe-q9-CE0" secondAttribute="trailing" id="Z9k-UK-JOM"/>
+                                            <constraint firstItem="2jt-cc-7gj" firstAttribute="centerY" secondItem="GxA-kV-3mP" secondAttribute="centerY" id="a2y-Jv-lv0"/>
+                                            <constraint firstItem="2jt-cc-7gj" firstAttribute="centerX" secondItem="GxA-kV-3mP" secondAttribute="centerX" id="ipg-5H-tDK"/>
                                             <constraint firstAttribute="bottom" secondItem="yhe-q9-CE0" secondAttribute="bottom" id="zN8-t6-qcW"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="yhe-q9-CE0" id="IOr-IO-5Ai"/>
+                                            <outlet property="loadingWheel" destination="2jt-cc-7gj" id="RbC-5E-trH"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ul-Qs-bFc">
-                                <rect key="frame" x="0.0" y="184" width="600" height="372"/>
-                                <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hDX-3T-DPw">
-                                        <rect key="frame" x="290" y="176" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="hDX-3T-DPw" firstAttribute="centerX" secondItem="9Ul-Qs-bFc" secondAttribute="centerX" id="cRv-HZ-Lyg"/>
-                                    <constraint firstItem="hDX-3T-DPw" firstAttribute="centerY" secondItem="9Ul-Qs-bFc" secondAttribute="centerY" id="pkH-fL-37u"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="dxw-0h-MHK" firstAttribute="leading" secondItem="Kzy-CV-2hg" secondAttribute="leading" id="4bY-pK-dlp"/>
                             <constraint firstItem="jjF-4r-OLX" firstAttribute="height" secondItem="Kzy-CV-2hg" secondAttribute="height" multiplier="0.2" id="AQu-M9-TLU"/>
                             <constraint firstItem="rkV-Ej-ATg" firstAttribute="leading" secondItem="Kzy-CV-2hg" secondAttribute="leading" id="JXq-aR-xEk"/>
-                            <constraint firstItem="9Ul-Qs-bFc" firstAttribute="top" secondItem="rkV-Ej-ATg" secondAttribute="top" id="Ok7-FZ-Mac"/>
-                            <constraint firstItem="9Ul-Qs-bFc" firstAttribute="leading" secondItem="Kzy-CV-2hg" secondAttribute="leading" id="OpO-QG-qX3"/>
                             <constraint firstItem="jjF-4r-OLX" firstAttribute="top" secondItem="jI5-1V-z51" secondAttribute="bottom" id="Ptk-xg-eiE"/>
                             <constraint firstItem="rkV-Ej-ATg" firstAttribute="top" secondItem="jjF-4r-OLX" secondAttribute="bottom" id="Q1q-uX-cJp"/>
                             <constraint firstAttribute="trailing" secondItem="jjF-4r-OLX" secondAttribute="trailing" id="TyB-Yd-4sb"/>
                             <constraint firstAttribute="trailing" secondItem="dxw-0h-MHK" secondAttribute="trailing" id="YiX-dI-SXF"/>
-                            <constraint firstItem="9Ul-Qs-bFc" firstAttribute="bottom" secondItem="rkV-Ej-ATg" secondAttribute="bottom" id="ZHO-Ge-IlI"/>
                             <constraint firstItem="dxw-0h-MHK" firstAttribute="top" secondItem="rkV-Ej-ATg" secondAttribute="bottom" id="aNd-3y-4Vt"/>
                             <constraint firstAttribute="trailing" secondItem="rkV-Ej-ATg" secondAttribute="trailing" id="aYJ-K3-Ip4"/>
                             <constraint firstItem="EfI-rk-yw9" firstAttribute="top" secondItem="dxw-0h-MHK" secondAttribute="bottom" id="kW0-KF-N8K"/>
                             <constraint firstItem="jjF-4r-OLX" firstAttribute="leading" secondItem="Kzy-CV-2hg" secondAttribute="leading" id="wv8-vN-oKl"/>
-                            <constraint firstAttribute="trailing" secondItem="9Ul-Qs-bFc" secondAttribute="trailing" id="yZp-jh-hy7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Zmj-qY-NyJ">
@@ -143,9 +132,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="animateView" destination="9Ul-Qs-bFc" id="HYl-eI-3iW"/>
                         <outlet property="collectionView" destination="rkV-Ej-ATg" id="8s2-CX-9d1"/>
-                        <outlet property="loadingWheel" destination="hDX-3T-DPw" id="8Mc-Vz-CAp"/>
                         <outlet property="mapView" destination="jjF-4r-OLX" id="aZY-Wo-Zsq"/>
                         <outlet property="newCollectionButton" destination="H8n-Yl-T71" id="Eqp-qQ-hcG"/>
                     </connections>

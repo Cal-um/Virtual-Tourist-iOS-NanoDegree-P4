@@ -39,7 +39,6 @@ extension ManagedObjectType where Self: ManagedObject  {
 				holder.append(res)
 			}
 		}
-		print("££££££££££££££££££££\(holder)")
 		return holder
 	}
 	

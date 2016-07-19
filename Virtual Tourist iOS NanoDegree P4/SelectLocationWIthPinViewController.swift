@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreData
 
+// Tap and hold gesture will frop a pin on the mapView and this pin along with the coordinates will be saved into coredata via the DownloadSync class. You can tap and hold the pin to move it around.
+
 class SelectLocationWithPinViewController: UIViewController, ManagedObjectContextSettable {
 	
 	var shortTapOnPin: Bool = false

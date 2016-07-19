@@ -9,13 +9,18 @@
 import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
-	
+	@IBOutlet weak var loadingWheel: UIActivityIndicatorView!
 	@IBOutlet weak var imageView: UIImageView!
 }
 
 extension PhotoCollectionViewCell: ConfigurableCell {
 	func configureCell(photoObject: Photo) {
-		imageView.image = UIImage(data: photoObject.photoImage)
+		if let photo = photoObject.photoImage {
+			loadingWheel.stopAnimating()
+			imageView.image = UIImage(data: photo)
+		} else {
+			loadingWheel.startAnimating()
+		}
 	}
 }
 

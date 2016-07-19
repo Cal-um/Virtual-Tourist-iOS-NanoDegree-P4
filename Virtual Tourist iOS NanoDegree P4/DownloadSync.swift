@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+// 2 contexts connected to the same PSC. When the syncManagedObjectContext saves data (in this case downloaded data only) the mainManagedObjectContext will recieve a message from a notification and in turn will merge changes from the save.
+
 class DownloadSync {
 	
 	let mainManagedObjectContext: NSManagedObjectContext!
@@ -30,12 +32,9 @@ class DownloadSync {
 			self.getJSONAndParseURLs(backgroundPin) { result in
 				print("2")
 				print(result)
-				self.downloadPhoto(result!) { images in
+				let photoArray = self.saveTemplatePhoto(result!, backgroundPin: backgroundPin)
+				self.downloadPhoto(photoArray) { _ in
 					print("3")
-					self.sendToBackgroundContext(images, backgroundPin: backgroundPin) { complete in
-						print(complete)
-						self.syncManagedObjectContext.trySave()
-					}
 				}
 			}
 		}
@@ -53,9 +52,9 @@ extension DownloadSync {
 	
 	// Networking Code
 	
-	func getJSONAndParseURLs(pin: Pin, completion: [NSURL]? -> ()) {
+	func getJSONAndParseURLs(pin: Pin, completion: [String]? -> ()) {
 		
-		let parseAll = Resource<[NSURL]>(url: FlickrConvenience.buildURL(pin), parseJSON: { jsonData in
+		let parseAll = Resource<[String]>(url: FlickrConvenience.buildURL(pin), parseJSON: { jsonData in
 			guard let json = jsonData as? JSONDictionary, photos = json["photos"] as? JSONDictionary, photo = photos["photo"] as? [JSONDictionary] else { return nil }
 			return photo.flatMap(Photo.parseURLs)
 		})
@@ -64,23 +63,21 @@ extension DownloadSync {
 		}
 	}
 	
-	func downloadPhoto(urls: [NSURL], completion: [NSData] -> ()) {
+	func downloadPhoto(photoArray: [Photo], completion: Bool -> ()) {
 		
-		let urlsForDownload = Photo.randomiseURLs(urls)
 		
-		var images = [NSData]()
 		var counter = 0
-		for url in urlsForDownload {
-			let getImage = Resource<NSData>(url: url, parse: { data in
+		for photo in photoArray {
+			let getImage = Resource<NSData>(url: photo.nsURL, parse: { data in
 				return data
 			})
 			WebService().load(getImage) { result in
 				counter += 1
 				if let image = result {
 					print("image downloaded")
-					images.append(image)
-					if counter == urlsForDownload.count {
-						completion(images)
+					self.sendToBackgroundContextWithImage(image, photoToAddImage: photo)
+					if counter == photoArray.count {
+						completion(true)
 					}
 				}
 			}
@@ -91,16 +88,25 @@ extension DownloadSync {
 		return Pin.findOrFetchSingleInstanceInContext(syncManagedObjectContext, matchingPredicate: Pin.constructFindPinPredicate(lat, long: long))!
 	}
 	
-	func sendToBackgroundContext(images:[NSData], backgroundPin: Pin, completion: Bool -> ()) {
+	func saveTemplatePhoto(urls: [String], backgroundPin: Pin) -> [Photo] {
 		
-		for image in images {
-			print("save")
+		let urlsForDownload = Photo.randomiseURLs(urls)
+		var pinsInContext: [Photo] = []
+		for photoURL in urlsForDownload {
 			let obj: Photo = syncManagedObjectContext.insertObject()
-			obj.photoImage = image
 			obj.owner = backgroundPin
+			obj.url = photoURL
 			obj.dateOfDownload = NSDate()
+			pinsInContext.append(obj)
 		}
-		completion(true)
+		syncManagedObjectContext.trySave()
+		return pinsInContext
+	}
+	
+	func sendToBackgroundContextWithImage(image: NSData, photoToAddImage: Photo) {
+		print("save")
+		photoToAddImage.photoImage = image
+		syncManagedObjectContext.trySave()
 	}
 }
 

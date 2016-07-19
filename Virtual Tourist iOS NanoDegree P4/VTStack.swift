@@ -45,7 +45,7 @@ extension NSManagedObjectContext {
 		return pins
 	}
 	
-	// This saves the main context
+	// This saves the context called from
 	
 	func trySave() {
 	

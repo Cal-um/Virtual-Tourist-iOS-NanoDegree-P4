@@ -10,25 +10,14 @@ import UIKit
 import CoreData
 import MapKit
 
+// The collectionView and fetchedResultsController have been moved into their own classes for easy resuse and to declutter the viewController. Download of images are initiated when there are no cells in the collectionView or the user taps the "new album" button.
+
 class PinSelectedViewController: UIViewController, ManagedObjectContextSettable, SelectedPinSettable {
 	
 	var downloadSyncAndMOC: DownloadSync!
 	var selectedPin: Pin!
 	var mainContext: NSManagedObjectContext! 
 	
-	var itemsInCollectionView: Int! {
-		didSet {
-			if itemsInCollectionView > 0 {
-				animateView.hidden = true
-				loadingWheel.stopAnimating()
-				} else {
-					animateView.hidden = false
-					loadingWheel.startAnimating()
-			}
-		}
-	}
-	
-	@IBOutlet weak var loadingWheel: UIActivityIndicatorView!
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var mapView: MKMapView!
@@ -39,18 +28,14 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	}
 	
 	@IBAction func buttonPressed(sender: AnyObject) {
-		mainContext.trySave()
 		dismissViewControllerAnimated(true, completion: nil)
 	}
 	
 	override func viewDidLoad() {
 		setMapView()
-		collectionView.delegate = self
 		mainContext = downloadSyncAndMOC.mainManagedObjectContext
-		collectionView.backgroundView?.backgroundColor = UIColor.whiteColor()
 		setUpCollectionView()
-		itemsInCollectionView = collectionView.numberOfItemsInSection(0)
-		if itemsInCollectionView == 0 {
+		if collectionView.numberOfItemsInSection(0) == 0 {
 			print(downloadSyncAndMOC.downloadImagesFromNetwork(latFromPin: selectedPin.latitude, longFromPin: selectedPin.longitude))
 		}
 	}
@@ -59,6 +44,7 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	private var dataSource: CollectionViewDataSource<PinSelectedViewController, PhotosDataProvider, PhotoCollectionViewCell>!
 	
 	private func setUpCollectionView() {
+		collectionView.delegate = self
 	  let request = NSFetchRequest(entityName: "Photo")
 		let pin = selectedPin
 		let pred = NSPredicate(format: "owner = %@", argumentArray: [pin])
@@ -71,6 +57,8 @@ class PinSelectedViewController: UIViewController, ManagedObjectContextSettable,
 	}
 	
 	private func setMapView() {
+		mapView.scrollEnabled = false
+		mapView.zoomEnabled = false
 		let span = MKCoordinateSpanMake(0.030, 0.030)
 		let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: selectedPin.latitude, longitude: selectedPin.longitude), span: span)
 		mapView.setRegion(region, animated: true)
@@ -105,7 +93,6 @@ extension PinSelectedViewController: DataProviderDelegate {
 	func dataProviderDidUpdate(updates: [DataProviderUpdate<Photo>]?) {
 		print("updates")
 		dataSource.processUpdates(updates)
-		itemsInCollectionView = collectionView.numberOfItemsInSection(0)
 	}
 }
 
@@ -113,6 +100,7 @@ extension PinSelectedViewController: UICollectionViewDelegate {
 	
 	func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 		mainContext.deleteObject(dataSource.selectedObjectAtIndexPath(indexPath))
+		mainContext.trySave()
 	}
 }
 

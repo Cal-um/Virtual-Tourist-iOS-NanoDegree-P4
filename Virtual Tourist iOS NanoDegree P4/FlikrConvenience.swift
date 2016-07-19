@@ -20,15 +20,14 @@ struct FlickrConvenience {
 
 extension Photo {
 	
-	static func parseURLs(dictionary: JSONDictionary) -> NSURL? {
+	static func parseURLs(dictionary: JSONDictionary) -> String? {
 		guard let urlString = dictionary["url_m"] as? String else { return nil }
-		let url = NSURL(string: urlString)
-		return url
+		return urlString
 	}
 	
-	static func randomiseURLs(urls: [NSURL]) -> [NSURL] {
+	static func randomiseURLs(urls: [String]) -> [String] {
 		var count = urls.count
-		var urlsForDownload = [NSURL]()
+		var urlsForDownload = [String]()
 		if urls.count >= 15 {
 			while urlsForDownload.count != 15 {
 				urlsForDownload.append(urls[Int(arc4random_uniform(UInt32(count)))])

@@ -11,8 +11,13 @@ import CoreData
 
 public final class Photo: ManagedObject {
 	@NSManaged public var dateOfDownload: NSDate
-	@NSManaged public var photoImage: NSData
+	@NSManaged public var photoImage: NSData?
 	@NSManaged public var owner: Pin
+	@NSManaged public var url: String
+	
+	var nsURL: NSURL {
+		return NSURL(string: url)!
+	}
 }
 
 extension Photo: ManagedObjectType {
