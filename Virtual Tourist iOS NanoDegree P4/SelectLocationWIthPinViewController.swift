@@ -31,7 +31,6 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 			}
 		}
 		
-		
 		// Configure map press
 		mapView.delegate = self
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressAction))
@@ -64,9 +63,7 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 			vc.selectedPin = pin
 		}
 	}
-	
-	
-	
+
 	func loadMapViewLastRegion() {
 		
 		guard let hasRegion = MKRegionInformation.checkIfThereAreSavedCoordinatesAndDecode() else { return }
@@ -88,7 +85,6 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 	}
 	
 	func shortPressAction(gesture: UIGestureRecognizer) {
-		//if gesture.state != .Began { return }
 			print("shortPressAction state of shortTapOnPin = \(shortTapOnPin)")
 			shortTapOnPin = true
 	}
@@ -101,8 +97,6 @@ class SelectLocationWithPinViewController: UIViewController, ManagedObjectContex
 		return MKPin
 	}
 }
-
-
 
 extension SelectLocationWithPinViewController: MKMapViewDelegate {
 	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -152,6 +146,7 @@ extension SelectLocationWithPinViewController: MKMapViewDelegate {
 					selectedpin = findPinInContextfrom(coord.coordinate)
 			}
 		performSegueWithIdentifier("ShowPhotos", sender: nil)
+			mapView.deselectAnnotation(view.annotation, animated: false)
 		}
 	}
 	
